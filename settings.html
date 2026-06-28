@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings — Nexus Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+
+<style></style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar"><div class="sidebar-logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="#C89B3C" stroke-width="1.5" fill="none"/>
+        <ellipse cx="20" cy="20" rx="8" ry="18" stroke="#C89B3C" stroke-width="1" fill="none"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#C89B3C" stroke-width="1"/>
+        <line x1="4" y1="12" x2="36" y2="12" stroke="#C89B3C" stroke-width="0.8"/>
+        <line x1="4" y1="28" x2="36" y2="28" stroke="#C89B3C" stroke-width="0.8"/>
+        <path d="M14 8L26 32" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="sidebar-logo-name">NEXUS GROUP</span>
+      <span class="sidebar-logo-sub">Connecting Global Trade</span>
+    </div><nav class="sidebar-nav"><a href="dashboard.html" class="nav-item "><span class="nav-icon">⊞</span><span>Dashboard</span></a><a href="products.html" class="nav-item "><span class="nav-icon">📦</span><span>Products</span></a><a href="buyers.html" class="nav-item "><span class="nav-icon">👥</span><span>Buyers</span></a><a href="suppliers.html" class="nav-item "><span class="nav-icon">🏭</span><span>Suppliers</span></a><div class="sidebar-section-label">Operations</div><a href="quotes.html" class="nav-item "><span class="nav-icon">📋</span><span>Quote Requests</span><span class="nav-badge">14</span></a><a href="orders.html" class="nav-item "><span class="nav-icon">🛒</span><span>Orders</span></a><a href="shipments.html" class="nav-item "><span class="nav-icon">🚢</span><span>Shipments</span></a><a href="countries.html" class="nav-item "><span class="nav-icon">🌍</span><span>Countries</span></a><div class="sidebar-section-label">Finance</div><a href="revenue.html" class="nav-item "><span class="nav-icon">₹</span><span>Revenue</span></a><a href="analytics.html" class="nav-item "><span class="nav-icon">📊</span><span>Analytics</span></a><div class="sidebar-section-label">System</div><a href="users.html" class="nav-item "><span class="nav-icon">👤</span><span>Users</span></a><a href="settings.html" class="nav-item active"><span class="nav-icon">⚙️</span><span>Settings</span></a><a href="assistant.html" class="nav-item "><span class="nav-icon">✦</span><span>AI Assistant</span></a><hr style="border:none;border-top:1px solid var(--border);margin:10px 0;"><a href="index.html" class="nav-item" style="color:#EF4444;"><span class="nav-icon">⏻</span><span>Logout</span></a></nav><div class="sidebar-footer">
+      <div class="sidebar-avatar-sm">K</div>
+      <div class="sidebar-footer-text"><strong>Kamalesh Reddy</strong>Founder &amp; CEO</div>
+    </div></aside>
+<div class="main">
+<header class="topbar">
+      <div class="topbar-search">
+        <span style="font-size:13px;color:var(--gray);">🔍</span>
+        <input type="text" placeholder="Search anything...">
+        <span class="topbar-search-kbd">⌘K</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date">
+          <span>📅</span>
+          <span class="date-val" id="topbarDate"></span>
+          <span class="date-day" id="topbarDay"></span>
+        </div>
+        <div class="topbar-icon-btn">🔔<span class="topbar-count">8</span></div>
+        <div class="topbar-icon-btn">✉️<span class="topbar-count red">6</span></div>
+        <div class="topbar-profile">
+          <div class="topbar-profile-info">
+            <div class="topbar-profile-name">Kamalesh Reddy</div>
+            <div class="topbar-profile-role">Founder &amp; CEO</div>
+          </div>
+          <div class="topbar-avatar">K</div>
+        </div>
+      </div>
+    </header>
+<div class="content">
+
+<div class="page-header">
+  <div>
+    <div class="page-title">Settings</div>
+    <div class="page-subtitle">Configure your Nexus Group platform</div>
+  </div>
+  <div class="page-actions">
+    <button class="btn btn-primary" onclick="showToast('Settings saved','success')">💾 Save All Changes</button>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+  <div class="card">
+    <div class="card-header"><span class="card-title">Company Details</span></div>
+    <div class="form-grid">
+      <div class="form-group full"><label class="form-label">Company Name</label><input class="form-input" value="Nexus Group"></div>
+      <div class="form-group full"><label class="form-label">Tagline</label><input class="form-input" value="Connecting Global Trade"></div>
+      <div class="form-group"><label class="form-label">Phone</label><input class="form-input" value="+91 80 1234 5678"></div>
+      <div class="form-group"><label class="form-label">GST Number</label><input class="form-input" value="29AAAAA0000A1Z5"></div>
+      <div class="form-group full"><label class="form-label">Address</label><textarea class="form-textarea" style="min-height:60px;">Bengaluru, Karnataka, India - 560001</textarea></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Email / SMTP</span></div>
+    <div class="form-grid">
+      <div class="form-group full"><label class="form-label">Business Email</label><input class="form-input" value="info@nexusgroup.in"></div>
+      <div class="form-group full"><label class="form-label">SMTP Host</label><input class="form-input" value="smtp.gmail.com"></div>
+      <div class="form-group"><label class="form-label">SMTP Port</label><input class="form-input" value="587"></div>
+      <div class="form-group"><label class="form-label">Username</label><input class="form-input" value="reddykamalesh0@gmail.com"></div>
+      <div class="form-group full"><label class="form-label">App Password</label><input class="form-input" type="password" value="****************"></div>
+    </div>
+    <button class="btn btn-secondary btn-sm" style="margin-top:12px;" onclick="showToast('Test email sent','success')">✉️ Send Test Email</button>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Currency & Tax</span></div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Default Currency</label><select class="form-select"><option>INR (₹)</option><option>USD ($)</option><option>AED</option></select></div>
+      <div class="form-group"><label class="form-label">GST Rate (%)</label><input class="form-input" type="number" value="18"></div>
+      <div class="form-group"><label class="form-label">Export Currency</label><select class="form-select"><option>USD ($)</option><option>AED</option><option>SAR</option></select></div>
+      <div class="form-group"><label class="form-label">Exchange Rate (1 USD)</label><input class="form-input" value="84.2"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">API Keys</span></div>
+    <div class="form-grid">
+      <div class="form-group full"><label class="form-label">Backend API URL</label><input class="form-input" value="https://api.nexusgroup.in/v1"></div>
+      <div class="form-group full"><label class="form-label">API Key</label><div style="display:flex;gap:8px;"><input class="form-input" type="password" value="sk_live_nexus_xxxxxxxxxxxx"><button class="btn btn-secondary btn-sm" onclick="showToast('Key regenerated','success')">Regen</button></div></div>
+      <div class="form-group full"><label class="form-label">Anthropic API Key (AI)</label><input class="form-input" type="password" value="sk-ant-xxxxxxxxxxxxxxxxxx"></div>
+    </div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+  <div class="card">
+    <div class="card-header"><span class="card-title">Theme</span></div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px;border:2px solid var(--gold);border-radius:9px;cursor:pointer;background:var(--gold-dim);"><div style="width:20px;height:20px;background:var(--white);border-radius:5px;border:1px solid var(--border);"></div><span style="font-size:12.5px;font-weight:600;">Light Mode (Active)</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:9px;cursor:pointer;" onclick="showToast('Dark mode coming soon','default')"><div style="width:20px;height:20px;background:#1B1B1B;border-radius:5px;"></div><span style="font-size:12.5px;">Dark Mode</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Backup & Restore</span></div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button class="btn btn-secondary" onclick="showToast('Backup created','success')">⬇ Download Backup</button>
+      <button class="btn btn-secondary" onclick="showToast('Restore initiated','success')">⬆ Restore from Backup</button>
+      <div style="font-size:11px;color:var(--gray);">Last backup: May 28, 2025 · 02:00 AM</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Database</span></div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="form-group"><label class="form-label">MongoDB URI</label><input class="form-input" type="password" value="mongodb+srv://nexus:****@cluster0.mongodb.net"></div>
+      <button class="btn btn-secondary btn-sm" onclick="showToast('Connection successful','success')">🔌 Test Connection</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="dash-footer">© 2025 Nexus Group · Bengaluru, India · v1.0.0</div>
+</div>
+</div>
+<div class="ai-fab">
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-icon">✦</div>
+      <div><div class="ai-panel-title">Nexus AI Assistant</div></div>
+      <button class="modal-close" style="margin-left:auto;" onclick="toggleAI()">✕</button>
+    </div>
+    <div class="ai-panel-body">
+      <div class="ai-bubble">Hello, Founder Kamalesh. Ask me anything about Nexus Group.</div>
+      <div class="ai-chips">
+        <button class="ai-chip" onclick="aiQuery('Summarize today\'s business')">📊 Summarize today's business</button>
+        <button class="ai-chip" onclick="aiQuery('Who is our top buyer this month?')">👑 Top buyer this month</button>
+        <button class="ai-chip" onclick="aiQuery('Show pending shipments')">🚢 Pending shipments</button>
+        <button class="ai-chip" onclick="aiQuery('Draft a quotation email')">📝 Draft quotation email</button>
+      </div>
+    </div>
+    <div class="ai-panel-input">
+      <input type="text" placeholder="Ask anything..." id="aiInput" onkeydown="if(event.key==='Enter')aiSend()">
+      <button class="ai-send-btn" onclick="aiSend()">→</button>
+    </div>
+  </div>
+  <button class="ai-fab-btn" onclick="toggleAI()">
+    <div class="ai-fab-icon">✦</div>
+    <div class="ai-fab-text">
+      <div class="ai-fab-title">Nexus AI</div>
+      <div class="ai-fab-sub">Ask about your business</div>
+    </div>
+    <span id="aiChevron" style="font-size:9px;color:var(--gray);">▲</span>
+  </button>
+</div>
+<div class="toast-wrap" id="toastWrap"></div>
+<script src="_shared.js"></script>
+
+</body>
+</html>

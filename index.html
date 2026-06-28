@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus Group — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--gold:#C89B3C;--gold-light:#D4A94A;--border:#E9E4DB;--bg:#F8F6F2;--dark:#1B1B1B;--gray:#8C8C8C;}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);display:flex;align-items:center;justify-content:center;}
+.login-box{background:white;border:1px solid var(--border);border-radius:20px;padding:40px;width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.08);}
+.login-logo{display:flex;flex-direction:column;align-items:center;margin-bottom:32px;}
+.login-logo svg{width:52px;height:52px;margin-bottom:8px;}
+.login-logo-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:.12em;}
+.login-logo-sub{font-size:9px;letter-spacing:.18em;color:var(--gray);text-transform:uppercase;}
+.login-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--dark);margin-bottom:4px;}
+.login-sub{font-size:12.5px;color:var(--gray);margin-bottom:28px;}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.form-label{font-size:10.5px;font-weight:700;color:var(--dark);letter-spacing:.05em;text-transform:uppercase;}
+.form-input{border:1px solid var(--border);border-radius:9px;padding:10px 12px;font-size:13px;font-family:'Inter',sans-serif;color:var(--dark);background:var(--bg);outline:none;transition:border-color .15s;width:100%;}
+.form-input:focus{border-color:var(--gold);background:white;}
+.login-btn{width:100%;padding:12px;background:var(--gold);color:white;border:none;border-radius:9px;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;margin-top:8px;letter-spacing:.02em;transition:background .15s;}
+.login-btn:hover{background:var(--gold-light);}
+.login-footer{font-size:11px;color:var(--gray);text-align:center;margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="login-box">
+  <div class="login-logo">
+    <svg viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="18" stroke="#C89B3C" stroke-width="1.5" fill="none"/>
+      <ellipse cx="20" cy="20" rx="8" ry="18" stroke="#C89B3C" stroke-width="1" fill="none"/>
+      <line x1="2" y1="20" x2="38" y2="20" stroke="#C89B3C" stroke-width="1"/>
+      <line x1="4" y1="12" x2="36" y2="12" stroke="#C89B3C" stroke-width="0.8"/>
+      <line x1="4" y1="28" x2="36" y2="28" stroke="#C89B3C" stroke-width="0.8"/>
+      <path d="M14 8L26 32" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="login-logo-name">NEXUS GROUP</span>
+    <span class="login-logo-sub">Connecting Global Trade</span>
+  </div>
+  <div class="login-title">Welcome back</div>
+  <div class="login-sub">Sign in to your Nexus Group dashboard</div>
+  <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="reddykamalesh0@gmail.com" value="reddykamalesh0@gmail.com"></div>
+  <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" placeholder="••••••••" value="password"></div>
+  <button class="login-btn" onclick="window.location.href='dashboard.html'">Sign In →</button>
+  <div class="login-footer">© 2025 Nexus Group · Bengaluru, India</div>
+</div>
+</body>
+</html>

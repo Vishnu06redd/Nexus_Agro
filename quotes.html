@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quote Requests — Nexus Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+
+<style></style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar"><div class="sidebar-logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="#C89B3C" stroke-width="1.5" fill="none"/>
+        <ellipse cx="20" cy="20" rx="8" ry="18" stroke="#C89B3C" stroke-width="1" fill="none"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#C89B3C" stroke-width="1"/>
+        <line x1="4" y1="12" x2="36" y2="12" stroke="#C89B3C" stroke-width="0.8"/>
+        <line x1="4" y1="28" x2="36" y2="28" stroke="#C89B3C" stroke-width="0.8"/>
+        <path d="M14 8L26 32" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="sidebar-logo-name">NEXUS GROUP</span>
+      <span class="sidebar-logo-sub">Connecting Global Trade</span>
+    </div><nav class="sidebar-nav"><a href="dashboard.html" class="nav-item "><span class="nav-icon">⊞</span><span>Dashboard</span></a><a href="products.html" class="nav-item "><span class="nav-icon">📦</span><span>Products</span></a><a href="buyers.html" class="nav-item "><span class="nav-icon">👥</span><span>Buyers</span></a><a href="suppliers.html" class="nav-item "><span class="nav-icon">🏭</span><span>Suppliers</span></a><div class="sidebar-section-label">Operations</div><a href="quotes.html" class="nav-item active"><span class="nav-icon">📋</span><span>Quote Requests</span><span class="nav-badge">14</span></a><a href="orders.html" class="nav-item "><span class="nav-icon">🛒</span><span>Orders</span></a><a href="shipments.html" class="nav-item "><span class="nav-icon">🚢</span><span>Shipments</span></a><a href="countries.html" class="nav-item "><span class="nav-icon">🌍</span><span>Countries</span></a><div class="sidebar-section-label">Finance</div><a href="revenue.html" class="nav-item "><span class="nav-icon">₹</span><span>Revenue</span></a><a href="analytics.html" class="nav-item "><span class="nav-icon">📊</span><span>Analytics</span></a><div class="sidebar-section-label">System</div><a href="users.html" class="nav-item "><span class="nav-icon">👤</span><span>Users</span></a><a href="settings.html" class="nav-item "><span class="nav-icon">⚙️</span><span>Settings</span></a><a href="assistant.html" class="nav-item "><span class="nav-icon">✦</span><span>AI Assistant</span></a><hr style="border:none;border-top:1px solid var(--border);margin:10px 0;"><a href="index.html" class="nav-item" style="color:#EF4444;"><span class="nav-icon">⏻</span><span>Logout</span></a></nav><div class="sidebar-footer">
+      <div class="sidebar-avatar-sm">K</div>
+      <div class="sidebar-footer-text"><strong>Kamalesh Reddy</strong>Founder &amp; CEO</div>
+    </div></aside>
+<div class="main">
+<header class="topbar">
+      <div class="topbar-search">
+        <span style="font-size:13px;color:var(--gray);">🔍</span>
+        <input type="text" placeholder="Search anything...">
+        <span class="topbar-search-kbd">⌘K</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date">
+          <span>📅</span>
+          <span class="date-val" id="topbarDate"></span>
+          <span class="date-day" id="topbarDay"></span>
+        </div>
+        <div class="topbar-icon-btn">🔔<span class="topbar-count">8</span></div>
+        <div class="topbar-icon-btn">✉️<span class="topbar-count red">6</span></div>
+        <div class="topbar-profile">
+          <div class="topbar-profile-info">
+            <div class="topbar-profile-name">Kamalesh Reddy</div>
+            <div class="topbar-profile-role">Founder &amp; CEO</div>
+          </div>
+          <div class="topbar-avatar">K</div>
+        </div>
+      </div>
+    </header>
+<div class="content">
+
+<div class="page-header">
+  <div>
+    <div class="page-title">Quote Requests</div>
+    <div class="page-subtitle">All incoming inquiries from your website and buyers</div>
+  </div>
+  <div class="page-actions">
+    <button class="btn btn-secondary btn-sm">⬇ Export</button>
+    <button class="btn btn-primary" onclick="openModal('addQuoteModal')">+ New Quote</button>
+  </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-icon-wrap">📋</div><div class="kpi-value">14</div><div class="kpi-label">Pending</div><div class="kpi-trend down">Needs response</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">✅</div><div class="kpi-value">32</div><div class="kpi-label">Accepted</div><div class="kpi-trend up">This month</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">🔄</div><div class="kpi-value">7</div><div class="kpi-label">Negotiating</div><div class="kpi-trend neutral">—</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">❌</div><div class="kpi-value">3</div><div class="kpi-label">Rejected</div><div class="kpi-trend down">This month</div></div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">All Quote Requests</span>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <select class="form-select" style="width:auto;padding:5px 10px;font-size:11.5px;" onchange="filterQuotes(this.value)">
+        <option value="">All Status</option><option>Pending</option><option>Accepted</option><option>Negotiating</option><option>Rejected</option><option>Completed</option>
+      </select>
+      <div class="topbar-search" style="max-width:200px;margin:0;"><span style="font-size:12px;color:var(--gray);">🔍</span><input type="text" placeholder="Search quotes..."></div>
+    </div>
+  </div>
+  <table class="data-table" id="quotesTable">
+    <thead><tr><th>Quote ID</th><th>Buyer</th><th>Product</th><th>Quantity</th><th>Country</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr onclick="openDrawer('quoteDrawer')"><td><strong style="color:var(--gold);">QR-2025-078</strong></td><td>Al-Ameen Trading Co.</td><td>Green Chilli</td><td>25 Ton</td><td>🇦🇪 UAE</td><td>May 28</td><td><span class="badge badge-new">New</span></td><td><div style="display:flex;gap:4px;" onclick="event.stopPropagation()"><button class="btn btn-ghost btn-sm" onclick="openDrawer('quoteDrawer')">👁</button><button class="btn btn-primary btn-sm" onclick="showToast('Quote accepted','success')">✓ Accept</button><button class="btn btn-danger btn-sm" onclick="showToast('Quote rejected','error')">✕</button></div></td></tr>
+      <tr onclick="openDrawer('quoteDrawer')"><td><strong style="color:var(--gold);">QR-2025-077</strong></td><td>Fresh Foods Co.</td><td>Onion</td><td>40 Ton</td><td>🇶🇦 Qatar</td><td>May 28</td><td><span class="badge badge-pending">Pending</span></td><td><div style="display:flex;gap:4px;" onclick="event.stopPropagation()"><button class="btn btn-ghost btn-sm" onclick="openDrawer('quoteDrawer')">👁</button><button class="btn btn-primary btn-sm" onclick="showToast('Quote accepted','success')">✓ Accept</button><button class="btn btn-danger btn-sm" onclick="showToast('Quote rejected','error')">✕</button></div></td></tr>
+      <tr onclick="openDrawer('quoteDrawer')"><td><strong style="color:var(--gold);">QR-2025-076</strong></td><td>Al Waha Foods</td><td>Ginger</td><td>15 Ton</td><td>🇸🇦 Saudi Arabia</td><td>May 28</td><td><span class="badge badge-negotiating">Negotiating</span></td><td><div style="display:flex;gap:4px;" onclick="event.stopPropagation()"><button class="btn btn-ghost btn-sm" onclick="openDrawer('quoteDrawer')">👁</button><button class="btn btn-primary btn-sm" onclick="showToast('Quote accepted','success')">✓ Accept</button><button class="btn btn-danger btn-sm" onclick="showToast('Quote rejected','error')">✕</button></div></td></tr>
+      <tr onclick="openDrawer('quoteDrawer')"><td><strong style="color:var(--gold);">QR-2025-075</strong></td><td>Al Baraka Import</td><td>Potato</td><td>30 Ton</td><td>🇰🇼 Kuwait</td><td>May 27</td><td><span class="badge badge-accepted">Accepted</span></td><td><div style="display:flex;gap:4px;" onclick="event.stopPropagation()"><button class="btn btn-ghost btn-sm" onclick="openDrawer('quoteDrawer')">👁</button><button class="btn btn-secondary btn-sm" onclick="showToast('Order created','success')">📦 Create Order</button></div></td></tr>
+      <tr onclick="openDrawer('quoteDrawer')"><td><strong style="color:var(--gold);">QR-2025-074</strong></td><td>Oceanic Exports</td><td>Garlic</td><td>10 Ton</td><td>🇴🇲 Oman</td><td>May 27</td><td><span class="badge badge-rejected">Rejected</span></td><td><div style="display:flex;gap:4px;" onclick="event.stopPropagation()"><button class="btn btn-ghost btn-sm" onclick="openDrawer('quoteDrawer')">👁</button></div></td></tr>
+      <tr onclick="openDrawer('quoteDrawer')"><td><strong style="color:var(--gold);">QR-2025-073</strong></td><td>Gulf Foods Trading</td><td>Red Chilli</td><td>5 Ton</td><td>🇧🇭 Bahrain</td><td>May 26</td><td><span class="badge badge-completed">Completed</span></td><td><div style="display:flex;gap:4px;" onclick="event.stopPropagation()"><button class="btn btn-ghost btn-sm" onclick="openDrawer('quoteDrawer')">👁</button><button class="btn btn-secondary btn-sm">📄 PDF</button></div></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Quote Side Drawer -->
+<div class="drawer-overlay" id="quoteDrawerOverlay" onclick="closeDrawer('quoteDrawer')"></div>
+<div class="drawer" id="quoteDrawer">
+  <div class="drawer-header">
+    <div>
+      <div class="drawer-title">QR-2025-078</div>
+      <span class="badge badge-new" style="margin-top:4px;display:inline-flex;">New Request</span>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer('quoteDrawer')">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div><div class="info-section-title">Buyer Information</div><div class="info-grid">
+      <div class="info-item"><div class="info-label">Company</div><div class="info-value">Al-Ameen Trading Co.</div></div>
+      <div class="info-item"><div class="info-label">Contact</div><div class="info-value">Mohammed Al-Ameen</div></div>
+      <div class="info-item"><div class="info-label">Email</div><div class="info-value">info@alameen.ae</div></div>
+      <div class="info-item"><div class="info-label">Phone</div><div class="info-value">+971 50 123 4567</div></div>
+      <div class="info-item"><div class="info-label">Country</div><div class="info-value">🇦🇪 UAE</div></div>
+      <div class="info-item"><div class="info-label">Date Received</div><div class="info-value">May 28, 2025</div></div>
+    </div></div>
+    <div><div class="info-section-title">Product & Requirements</div><div class="info-grid">
+      <div class="info-item"><div class="info-label">Product</div><div class="info-value">Green Chilli</div></div>
+      <div class="info-item"><div class="info-label">Quantity</div><div class="info-value">25 Ton</div></div>
+      <div class="info-item"><div class="info-label">Shipping Port</div><div class="info-value">JNPT Mumbai</div></div>
+      <div class="info-item"><div class="info-label">Destination</div><div class="info-value">Jebel Ali, Dubai</div></div>
+      <div class="info-item"><div class="info-label">Required By</div><div class="info-value">June 15, 2025</div></div>
+      <div class="info-item"><div class="info-label">Payment Terms</div><div class="info-value">LC at Sight</div></div>
+    </div></div>
+    <div><div class="info-section-title">Special Requirements</div><p style="font-size:13px;color:var(--dark);line-height:1.6;">Fresh produce, Export Grade A only. Moisture content below 10%. Packed in 10kg mesh bags. Phytosanitary certificate required. Temperature controlled transport to port.</p></div>
+    <div><div class="info-section-title">Internal Notes</div><textarea class="form-textarea" placeholder="Add notes..." style="min-height:60px;"></textarea></div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn btn-primary btn-sm" onclick="showToast('Quote accepted','success')">✓ Accept Quote</button>
+    <button class="btn btn-secondary btn-sm" onclick="showToast('Negotiation started','default')">🔄 Negotiate</button>
+    <button class="btn btn-secondary btn-sm" onclick="showToast('Email sent','success')">✉️ Email</button>
+    <button class="btn btn-secondary btn-sm" onclick="showToast('Order created','success')">📦 Create Order</button>
+    <button class="btn btn-secondary btn-sm">📄 PDF</button>
+    <button class="btn btn-danger btn-sm" onclick="showToast('Quote rejected','error')">✕ Reject</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="addQuoteModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Create New Quote</div><button class="modal-close" onclick="closeModal('addQuoteModal')">✕</button></div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Buyer</label><input class="form-input" placeholder="Select buyer..."></div>
+      <div class="form-group"><label class="form-label">Product</label><select class="form-select"><option>Green Chilli</option><option>Onion</option><option>Ginger</option><option>Garlic</option><option>Potato</option></select></div>
+      <div class="form-group"><label class="form-label">Quantity (Ton)</label><input class="form-input" type="number" placeholder="25"></div>
+      <div class="form-group"><label class="form-label">Price per Ton (₹)</label><input class="form-input" placeholder="45,000"></div>
+      <div class="form-group"><label class="form-label">Shipping Port</label><input class="form-input" placeholder="JNPT Mumbai"></div>
+      <div class="form-group"><label class="form-label">Destination Port</label><input class="form-input" placeholder="Jebel Ali, Dubai"></div>
+      <div class="form-group full"><label class="form-label">Requirements / Notes</label><textarea class="form-textarea"></textarea></div>
+    </div>
+    <div class="form-footer">
+      <button class="btn btn-secondary" onclick="closeModal('addQuoteModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="closeModal('addQuoteModal');showToast('Quote saved','success')">💾 Save Quote</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="dash-footer">© 2025 Nexus Group · Bengaluru, India · v1.0.0</div>
+</div>
+</div>
+<div class="ai-fab">
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-icon">✦</div>
+      <div><div class="ai-panel-title">Nexus AI Assistant</div></div>
+      <button class="modal-close" style="margin-left:auto;" onclick="toggleAI()">✕</button>
+    </div>
+    <div class="ai-panel-body">
+      <div class="ai-bubble">Hello, Founder Kamalesh. Ask me anything about Nexus Group.</div>
+      <div class="ai-chips">
+        <button class="ai-chip" onclick="aiQuery('Summarize today\'s business')">📊 Summarize today's business</button>
+        <button class="ai-chip" onclick="aiQuery('Who is our top buyer this month?')">👑 Top buyer this month</button>
+        <button class="ai-chip" onclick="aiQuery('Show pending shipments')">🚢 Pending shipments</button>
+        <button class="ai-chip" onclick="aiQuery('Draft a quotation email')">📝 Draft quotation email</button>
+      </div>
+    </div>
+    <div class="ai-panel-input">
+      <input type="text" placeholder="Ask anything..." id="aiInput" onkeydown="if(event.key==='Enter')aiSend()">
+      <button class="ai-send-btn" onclick="aiSend()">→</button>
+    </div>
+  </div>
+  <button class="ai-fab-btn" onclick="toggleAI()">
+    <div class="ai-fab-icon">✦</div>
+    <div class="ai-fab-text">
+      <div class="ai-fab-title">Nexus AI</div>
+      <div class="ai-fab-sub">Ask about your business</div>
+    </div>
+    <span id="aiChevron" style="font-size:9px;color:var(--gray);">▲</span>
+  </button>
+</div>
+<div class="toast-wrap" id="toastWrap"></div>
+<script src="_shared.js"></script>
+<script>
+function filterQuotes(status) {
+  document.querySelectorAll('#quotesTable tbody tr').forEach(r => {
+    r.style.display = (!status || r.textContent.toLowerCase().includes(status.toLowerCase())) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

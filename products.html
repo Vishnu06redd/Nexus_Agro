@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — Nexus Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+
+<style>
+.prod-img { width:40px; height:40px; border-radius:8px; object-fit:cover; background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:20px; }
+.act-btns { display:flex; gap:4px; }
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar"><div class="sidebar-logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="#C89B3C" stroke-width="1.5" fill="none"/>
+        <ellipse cx="20" cy="20" rx="8" ry="18" stroke="#C89B3C" stroke-width="1" fill="none"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#C89B3C" stroke-width="1"/>
+        <line x1="4" y1="12" x2="36" y2="12" stroke="#C89B3C" stroke-width="0.8"/>
+        <line x1="4" y1="28" x2="36" y2="28" stroke="#C89B3C" stroke-width="0.8"/>
+        <path d="M14 8L26 32" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="sidebar-logo-name">NEXUS GROUP</span>
+      <span class="sidebar-logo-sub">Connecting Global Trade</span>
+    </div><nav class="sidebar-nav"><a href="dashboard.html" class="nav-item "><span class="nav-icon">⊞</span><span>Dashboard</span></a><a href="products.html" class="nav-item active"><span class="nav-icon">📦</span><span>Products</span></a><a href="buyers.html" class="nav-item "><span class="nav-icon">👥</span><span>Buyers</span></a><a href="suppliers.html" class="nav-item "><span class="nav-icon">🏭</span><span>Suppliers</span></a><div class="sidebar-section-label">Operations</div><a href="quotes.html" class="nav-item "><span class="nav-icon">📋</span><span>Quote Requests</span><span class="nav-badge">14</span></a><a href="orders.html" class="nav-item "><span class="nav-icon">🛒</span><span>Orders</span></a><a href="shipments.html" class="nav-item "><span class="nav-icon">🚢</span><span>Shipments</span></a><a href="countries.html" class="nav-item "><span class="nav-icon">🌍</span><span>Countries</span></a><div class="sidebar-section-label">Finance</div><a href="revenue.html" class="nav-item "><span class="nav-icon">₹</span><span>Revenue</span></a><a href="analytics.html" class="nav-item "><span class="nav-icon">📊</span><span>Analytics</span></a><div class="sidebar-section-label">System</div><a href="users.html" class="nav-item "><span class="nav-icon">👤</span><span>Users</span></a><a href="settings.html" class="nav-item "><span class="nav-icon">⚙️</span><span>Settings</span></a><a href="assistant.html" class="nav-item "><span class="nav-icon">✦</span><span>AI Assistant</span></a><hr style="border:none;border-top:1px solid var(--border);margin:10px 0;"><a href="index.html" class="nav-item" style="color:#EF4444;"><span class="nav-icon">⏻</span><span>Logout</span></a></nav><div class="sidebar-footer">
+      <div class="sidebar-avatar-sm">K</div>
+      <div class="sidebar-footer-text"><strong>Kamalesh Reddy</strong>Founder &amp; CEO</div>
+    </div></aside>
+<div class="main">
+<header class="topbar">
+      <div class="topbar-search">
+        <span style="font-size:13px;color:var(--gray);">🔍</span>
+        <input type="text" placeholder="Search anything...">
+        <span class="topbar-search-kbd">⌘K</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date">
+          <span>📅</span>
+          <span class="date-val" id="topbarDate"></span>
+          <span class="date-day" id="topbarDay"></span>
+        </div>
+        <div class="topbar-icon-btn">🔔<span class="topbar-count">8</span></div>
+        <div class="topbar-icon-btn">✉️<span class="topbar-count red">6</span></div>
+        <div class="topbar-profile">
+          <div class="topbar-profile-info">
+            <div class="topbar-profile-name">Kamalesh Reddy</div>
+            <div class="topbar-profile-role">Founder &amp; CEO</div>
+          </div>
+          <div class="topbar-avatar">K</div>
+        </div>
+      </div>
+    </header>
+<div class="content">
+
+<div class="page-header">
+  <div>
+    <div class="page-title">Products</div>
+    <div class="page-subtitle">Manage your export product catalogue</div>
+  </div>
+  <div class="page-actions">
+    <button class="btn btn-secondary btn-sm">⬇ Export</button>
+    <button class="btn btn-primary" onclick="openModal('addProductModal')">+ Add Product</button>
+  </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-icon-wrap">📦</div><div class="kpi-value">128</div><div class="kpi-label">Total Products</div><div class="kpi-trend up">↑ 12 this month</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">✅</div><div class="kpi-value">112</div><div class="kpi-label">Active</div><div class="kpi-trend up">87%</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">📁</div><div class="kpi-value">8</div><div class="kpi-label">Categories</div><div class="kpi-trend neutral">—</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">⚠️</div><div class="kpi-value">4</div><div class="kpi-label">Low Stock</div><div class="kpi-trend down">Needs attention</div></div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span class="card-title">Product Catalogue</span>
+      <select class="form-select" style="width:auto;padding:5px 10px;font-size:11.5px;"><option>All Categories</option><option>Vegetables</option><option>Grains</option><option>Spices</option><option>Fruits</option></select>
+      <select class="form-select" style="width:auto;padding:5px 10px;font-size:11.5px;"><option>All Status</option><option>Active</option><option>Inactive</option><option>Archived</option></select>
+    </div>
+    <div class="topbar-search" style="max-width:200px;margin:0;"><span style="font-size:12px;color:var(--gray);">🔍</span><input type="text" placeholder="Search products..." id="prodSearch" oninput="filterProducts()"></div>
+  </div>
+  <table class="data-table" id="productsTable">
+    <thead><tr>
+      <th style="width:44px;"></th>
+      <th>Product Name</th>
+      <th>Category</th>
+      <th>Price (per Ton)</th>
+      <th>Stock</th>
+      <th>Country</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr></thead>
+    <tbody id="productsTbody">
+      <tr><td><div class="prod-img">🫑</div></td><td><strong>Green Chilli</strong><br><span style="font-size:10px;color:var(--gray);">Min. 5 Ton · Export Grade A</span></td><td>Vegetables</td><td>₹45,000</td><td><span style="color:#22C55E;font-weight:600;">850 Ton</span></td><td>🇮🇳 India</td><td><span class="badge badge-active">Active</span></td><td class="act-btns"><button class="btn btn-ghost btn-sm" title="View">👁</button><button class="btn btn-ghost btn-sm" onclick="openModal('addProductModal')" title="Edit">✏️</button><button class="btn btn-danger btn-sm" title="Delete" onclick="showToast('Product deleted','success')">🗑</button><button class="btn btn-ghost btn-sm" title="Duplicate">⧉</button></td></tr>
+      <tr><td><div class="prod-img">🧅</div></td><td><strong>Onion (Red)</strong><br><span style="font-size:10px;color:var(--gray);">Min. 10 Ton · Export Grade A</span></td><td>Vegetables</td><td>₹18,000</td><td><span style="color:#22C55E;font-weight:600;">1,200 Ton</span></td><td>🇮🇳 India</td><td><span class="badge badge-active">Active</span></td><td class="act-btns"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-ghost btn-sm" onclick="openModal('addProductModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="showToast('Product deleted','success')">🗑</button><button class="btn btn-ghost btn-sm">⧉</button></td></tr>
+      <tr><td><div class="prod-img">🫚</div></td><td><strong>Ginger (Fresh)</strong><br><span style="font-size:10px;color:var(--gray);">Min. 5 Ton · Export Grade A</span></td><td>Spices</td><td>₹85,000</td><td><span style="color:#F59E0B;font-weight:600;">120 Ton</span></td><td>🇮🇳 India</td><td><span class="badge badge-active">Active</span></td><td class="act-btns"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-ghost btn-sm" onclick="openModal('addProductModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="showToast('Product deleted','success')">🗑</button><button class="btn btn-ghost btn-sm">⧉</button></td></tr>
+      <tr><td><div class="prod-img">🧄</div></td><td><strong>Garlic (Dry)</strong><br><span style="font-size:10px;color:var(--gray);">Min. 2 Ton · Export Grade A</span></td><td>Spices</td><td>₹1,20,000</td><td><span style="color:#EF4444;font-weight:600;">45 Ton</span></td><td>🇮🇳 India</td><td><span class="badge badge-active">Active</span></td><td class="act-btns"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-ghost btn-sm" onclick="openModal('addProductModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="showToast('Product deleted','success')">🗑</button><button class="btn btn-ghost btn-sm">⧉</button></td></tr>
+      <tr><td><div class="prod-img">🥔</div></td><td><strong>Potato</strong><br><span style="font-size:10px;color:var(--gray);">Min. 20 Ton · Export Grade B</span></td><td>Vegetables</td><td>₹12,000</td><td><span style="color:#22C55E;font-weight:600;">2,000 Ton</span></td><td>🇮🇳 India</td><td><span class="badge badge-active">Active</span></td><td class="act-btns"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-ghost btn-sm" onclick="openModal('addProductModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="showToast('Product deleted','success')">🗑</button><button class="btn btn-ghost btn-sm">⧉</button></td></tr>
+      <tr><td><div class="prod-img">🌶️</div></td><td><strong>Red Chilli (Dry)</strong><br><span style="font-size:10px;color:var(--gray);">Min. 1 Ton · Export Grade A</span></td><td>Spices</td><td>₹1,80,000</td><td><span style="color:#22C55E;font-weight:600;">380 Ton</span></td><td>🇮🇳 India</td><td><span class="badge badge-active">Active</span></td><td class="act-btns"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-ghost btn-sm" onclick="openModal('addProductModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="showToast('Product deleted','success')">🗑</button><button class="btn btn-ghost btn-sm">⧉</button></td></tr>
+      <tr><td><div class="prod-img">🌾</div></td><td><strong>Basmati Rice</strong><br><span style="font-size:10px;color:var(--gray);">Min. 25 Ton · Export Grade A</span></td><td>Grains</td><td>₹95,000</td><td><span style="color:#F59E0B;font-weight:600;">600 Ton</span></td><td>🇮🇳 India</td><td><span class="badge badge-inactive">Inactive</span></td><td class="act-btns"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-ghost btn-sm" onclick="openModal('addProductModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="showToast('Product deleted','success')">🗑</button><button class="btn btn-ghost btn-sm">⧉</button></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Add Product Modal -->
+<div class="modal-overlay" id="addProductModal">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-header">
+      <div class="modal-title">Add New Product</div>
+      <button class="modal-close" onclick="closeModal('addProductModal')">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Product Name</label><input class="form-input" placeholder="e.g. Green Chilli"></div>
+      <div class="form-group"><label class="form-label">Category</label><select class="form-select"><option>Vegetables</option><option>Spices</option><option>Grains</option><option>Fruits</option></select></div>
+      <div class="form-group full"><label class="form-label">Description</label><textarea class="form-textarea" placeholder="Product description, quality standards, certifications..."></textarea></div>
+      <div class="form-group"><label class="form-label">Price (per Ton)</label><input class="form-input" placeholder="₹ 45,000"></div>
+      <div class="form-group"><label class="form-label">Available Stock (Ton)</label><input class="form-input" type="number" placeholder="850"></div>
+      <div class="form-group"><label class="form-label">Minimum Order Qty (Ton)</label><input class="form-input" type="number" placeholder="5"></div>
+      <div class="form-group"><label class="form-label">Origin Country</label><select class="form-select"><option>India</option><option>Sri Lanka</option><option>Nepal</option></select></div>
+      <div class="form-group"><label class="form-label">Export Grade</label><select class="form-select"><option>Grade A</option><option>Grade B</option><option>Grade C</option></select></div>
+      <div class="form-group"><label class="form-label">Packing Details</label><input class="form-input" placeholder="e.g. 50kg jute bags"></div>
+      <div class="form-group"><label class="form-label">Status</label><select class="form-select"><option>Active</option><option>Inactive</option><option>Archived</option></select></div>
+      <div class="form-group full"><label class="form-label">Specifications</label><textarea class="form-textarea" placeholder="Moisture content, size, color, variety..."></textarea></div>
+    </div>
+    <div class="form-footer">
+      <button class="btn btn-secondary" onclick="closeModal('addProductModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="closeModal('addProductModal');showToast('Product saved successfully','success')">💾 Save Product</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="dash-footer">© 2025 Nexus Group · Bengaluru, India · v1.0.0</div>
+</div>
+</div>
+<div class="ai-fab">
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-icon">✦</div>
+      <div><div class="ai-panel-title">Nexus AI Assistant</div></div>
+      <button class="modal-close" style="margin-left:auto;" onclick="toggleAI()">✕</button>
+    </div>
+    <div class="ai-panel-body">
+      <div class="ai-bubble">Hello, Founder Kamalesh. Ask me anything about Nexus Group.</div>
+      <div class="ai-chips">
+        <button class="ai-chip" onclick="aiQuery('Summarize today\'s business')">📊 Summarize today's business</button>
+        <button class="ai-chip" onclick="aiQuery('Who is our top buyer this month?')">👑 Top buyer this month</button>
+        <button class="ai-chip" onclick="aiQuery('Show pending shipments')">🚢 Pending shipments</button>
+        <button class="ai-chip" onclick="aiQuery('Draft a quotation email')">📝 Draft quotation email</button>
+      </div>
+    </div>
+    <div class="ai-panel-input">
+      <input type="text" placeholder="Ask anything..." id="aiInput" onkeydown="if(event.key==='Enter')aiSend()">
+      <button class="ai-send-btn" onclick="aiSend()">→</button>
+    </div>
+  </div>
+  <button class="ai-fab-btn" onclick="toggleAI()">
+    <div class="ai-fab-icon">✦</div>
+    <div class="ai-fab-text">
+      <div class="ai-fab-title">Nexus AI</div>
+      <div class="ai-fab-sub">Ask about your business</div>
+    </div>
+    <span id="aiChevron" style="font-size:9px;color:var(--gray);">▲</span>
+  </button>
+</div>
+<div class="toast-wrap" id="toastWrap"></div>
+<script src="_shared.js"></script>
+<script>
+function filterProducts() {
+  const q = document.getElementById('prodSearch').value.toLowerCase();
+  document.querySelectorAll('#productsTbody tr').forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

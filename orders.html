@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orders — Nexus Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+
+<style></style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar"><div class="sidebar-logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="#C89B3C" stroke-width="1.5" fill="none"/>
+        <ellipse cx="20" cy="20" rx="8" ry="18" stroke="#C89B3C" stroke-width="1" fill="none"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#C89B3C" stroke-width="1"/>
+        <line x1="4" y1="12" x2="36" y2="12" stroke="#C89B3C" stroke-width="0.8"/>
+        <line x1="4" y1="28" x2="36" y2="28" stroke="#C89B3C" stroke-width="0.8"/>
+        <path d="M14 8L26 32" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="sidebar-logo-name">NEXUS GROUP</span>
+      <span class="sidebar-logo-sub">Connecting Global Trade</span>
+    </div><nav class="sidebar-nav"><a href="dashboard.html" class="nav-item "><span class="nav-icon">⊞</span><span>Dashboard</span></a><a href="products.html" class="nav-item "><span class="nav-icon">📦</span><span>Products</span></a><a href="buyers.html" class="nav-item "><span class="nav-icon">👥</span><span>Buyers</span></a><a href="suppliers.html" class="nav-item "><span class="nav-icon">🏭</span><span>Suppliers</span></a><div class="sidebar-section-label">Operations</div><a href="quotes.html" class="nav-item "><span class="nav-icon">📋</span><span>Quote Requests</span><span class="nav-badge">14</span></a><a href="orders.html" class="nav-item active"><span class="nav-icon">🛒</span><span>Orders</span></a><a href="shipments.html" class="nav-item "><span class="nav-icon">🚢</span><span>Shipments</span></a><a href="countries.html" class="nav-item "><span class="nav-icon">🌍</span><span>Countries</span></a><div class="sidebar-section-label">Finance</div><a href="revenue.html" class="nav-item "><span class="nav-icon">₹</span><span>Revenue</span></a><a href="analytics.html" class="nav-item "><span class="nav-icon">📊</span><span>Analytics</span></a><div class="sidebar-section-label">System</div><a href="users.html" class="nav-item "><span class="nav-icon">👤</span><span>Users</span></a><a href="settings.html" class="nav-item "><span class="nav-icon">⚙️</span><span>Settings</span></a><a href="assistant.html" class="nav-item "><span class="nav-icon">✦</span><span>AI Assistant</span></a><hr style="border:none;border-top:1px solid var(--border);margin:10px 0;"><a href="index.html" class="nav-item" style="color:#EF4444;"><span class="nav-icon">⏻</span><span>Logout</span></a></nav><div class="sidebar-footer">
+      <div class="sidebar-avatar-sm">K</div>
+      <div class="sidebar-footer-text"><strong>Kamalesh Reddy</strong>Founder &amp; CEO</div>
+    </div></aside>
+<div class="main">
+<header class="topbar">
+      <div class="topbar-search">
+        <span style="font-size:13px;color:var(--gray);">🔍</span>
+        <input type="text" placeholder="Search anything...">
+        <span class="topbar-search-kbd">⌘K</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date">
+          <span>📅</span>
+          <span class="date-val" id="topbarDate"></span>
+          <span class="date-day" id="topbarDay"></span>
+        </div>
+        <div class="topbar-icon-btn">🔔<span class="topbar-count">8</span></div>
+        <div class="topbar-icon-btn">✉️<span class="topbar-count red">6</span></div>
+        <div class="topbar-profile">
+          <div class="topbar-profile-info">
+            <div class="topbar-profile-name">Kamalesh Reddy</div>
+            <div class="topbar-profile-role">Founder &amp; CEO</div>
+          </div>
+          <div class="topbar-avatar">K</div>
+        </div>
+      </div>
+    </header>
+<div class="content">
+
+<div class="page-header">
+  <div>
+    <div class="page-title">Orders</div>
+    <div class="page-subtitle">Track and manage all confirmed orders</div>
+  </div>
+  <div class="page-actions">
+    <button class="btn btn-secondary btn-sm">⬇ Export</button>
+    <button class="btn btn-primary" onclick="openModal('addOrderModal')">+ New Order</button>
+  </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-icon-wrap">🛒</div><div class="kpi-value">32</div><div class="kpi-label">Total Orders</div><div class="kpi-trend up">↑ 18.2%</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">⏳</div><div class="kpi-value">8</div><div class="kpi-label">Processing</div><div class="kpi-trend neutral">—</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">🚢</div><div class="kpi-value">12</div><div class="kpi-label">Dispatched</div><div class="kpi-trend neutral">—</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">✅</div><div class="kpi-value">10</div><div class="kpi-label">Delivered</div><div class="kpi-trend up">This month</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">❌</div><div class="kpi-value">2</div><div class="kpi-label">Cancelled</div><div class="kpi-trend down">—</div></div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">Order Management</span>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <select class="form-select" style="width:auto;padding:5px 10px;font-size:11.5px;">
+        <option>All Status</option><option>Pending</option><option>Processing</option><option>Packing</option><option>Dispatched</option><option>In Transit</option><option>Delivered</option><option>Cancelled</option>
+      </select>
+    </div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>Order ID</th><th>Buyer</th><th>Product</th><th>Quantity</th><th>Value</th><th>Country</th><th>Order Date</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr><td><strong style="color:var(--gold);">ORD-2025-032</strong></td><td>Al Baraka Import</td><td>Potato</td><td>30 Ton</td><td>₹3.6L</td><td>🇰🇼 Kuwait</td><td>May 27</td><td><span class="badge badge-processing">Processing</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-secondary btn-sm" onclick="showToast('Status updated','success')">Change Status</button><button class="btn btn-secondary btn-sm">📄 Invoice</button></div></td></tr>
+      <tr><td><strong style="color:var(--gold);">ORD-2025-031</strong></td><td>Al Waha Foods</td><td>Ginger</td><td>15 Ton</td><td>₹12.75L</td><td>🇸🇦 Saudi Arabia</td><td>May 25</td><td><span class="badge badge-packing">Packing</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-secondary btn-sm" onclick="showToast('Status updated','success')">Change Status</button><button class="btn btn-secondary btn-sm">🚢 Assign Ship</button></div></td></tr>
+      <tr><td><strong style="color:var(--gold);">ORD-2025-030</strong></td><td>Fresh Foods Co.</td><td>Onion</td><td>40 Ton</td><td>₹7.2L</td><td>🇶🇦 Qatar</td><td>May 22</td><td><span class="badge badge-transit">In Transit</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-secondary btn-sm" href="shipments.html">View Shipment</button><button class="btn btn-secondary btn-sm">📄 Invoice</button></div></td></tr>
+      <tr><td><strong style="color:var(--gold);">ORD-2025-029</strong></td><td>Al-Ameen Trading</td><td>Green Chilli</td><td>25 Ton</td><td>₹11.25L</td><td>🇦🇪 UAE</td><td>May 18</td><td><span class="badge badge-delivered">Delivered</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-secondary btn-sm">📄 Invoice</button><button class="btn btn-secondary btn-sm">⬇ PDF</button></div></td></tr>
+      <tr><td><strong style="color:var(--gold);">ORD-2025-028</strong></td><td>Gulf Foods</td><td>Red Chilli</td><td>5 Ton</td><td>₹9L</td><td>🇧🇭 Bahrain</td><td>May 14</td><td><span class="badge badge-delivered">Delivered</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm">👁</button><button class="btn btn-secondary btn-sm">📄 Invoice</button></div></td></tr>
+      <tr><td><strong style="color:var(--gold);">ORD-2025-027</strong></td><td>Oceanic Exports</td><td>Garlic</td><td>10 Ton</td><td>₹12L</td><td>🇴🇲 Oman</td><td>May 10</td><td><span class="badge badge-cancelled">Cancelled</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm">👁</button></div></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal-overlay" id="addOrderModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Create New Order</div><button class="modal-close" onclick="closeModal('addOrderModal')">✕</button></div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Buyer</label><input class="form-input" placeholder="Select buyer..."></div>
+      <div class="form-group"><label class="form-label">Product</label><select class="form-select"><option>Green Chilli</option><option>Onion</option><option>Ginger</option></select></div>
+      <div class="form-group"><label class="form-label">Quantity (Ton)</label><input class="form-input" type="number"></div>
+      <div class="form-group"><label class="form-label">Total Value (₹)</label><input class="form-input" placeholder="₹ 0"></div>
+      <div class="form-group"><label class="form-label">Status</label><select class="form-select"><option>Pending</option><option>Processing</option><option>Packing</option></select></div>
+      <div class="form-group"><label class="form-label">Expected Dispatch</label><input class="form-input" type="date"></div>
+    </div>
+    <div class="form-footer">
+      <button class="btn btn-secondary" onclick="closeModal('addOrderModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="closeModal('addOrderModal');showToast('Order created','success')">💾 Save Order</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="dash-footer">© 2025 Nexus Group · Bengaluru, India · v1.0.0</div>
+</div>
+</div>
+<div class="ai-fab">
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-icon">✦</div>
+      <div><div class="ai-panel-title">Nexus AI Assistant</div></div>
+      <button class="modal-close" style="margin-left:auto;" onclick="toggleAI()">✕</button>
+    </div>
+    <div class="ai-panel-body">
+      <div class="ai-bubble">Hello, Founder Kamalesh. Ask me anything about Nexus Group.</div>
+      <div class="ai-chips">
+        <button class="ai-chip" onclick="aiQuery('Summarize today\'s business')">📊 Summarize today's business</button>
+        <button class="ai-chip" onclick="aiQuery('Who is our top buyer this month?')">👑 Top buyer this month</button>
+        <button class="ai-chip" onclick="aiQuery('Show pending shipments')">🚢 Pending shipments</button>
+        <button class="ai-chip" onclick="aiQuery('Draft a quotation email')">📝 Draft quotation email</button>
+      </div>
+    </div>
+    <div class="ai-panel-input">
+      <input type="text" placeholder="Ask anything..." id="aiInput" onkeydown="if(event.key==='Enter')aiSend()">
+      <button class="ai-send-btn" onclick="aiSend()">→</button>
+    </div>
+  </div>
+  <button class="ai-fab-btn" onclick="toggleAI()">
+    <div class="ai-fab-icon">✦</div>
+    <div class="ai-fab-text">
+      <div class="ai-fab-title">Nexus AI</div>
+      <div class="ai-fab-sub">Ask about your business</div>
+    </div>
+    <span id="aiChevron" style="font-size:9px;color:var(--gray);">▲</span>
+  </button>
+</div>
+<div class="toast-wrap" id="toastWrap"></div>
+<script src="_shared.js"></script>
+
+</body>
+</html>
