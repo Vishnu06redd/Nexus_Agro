@@ -57,15 +57,16 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // ── Health check ─────────────────────────────────────────────
 app.get('/health', async (_req, res) => {
   try {
-    const result = await pool.query('SELECT NOW()');
+    await pool.query('SELECT 1');
 
     res.json({
       status: 'ok',
       db: 'connected',
-      time: result.rows[0].now,
+      time: new Date().toISOString(),
     });
+
   } catch (err) {
-    console.error('HEALTH ERROR:', err);
+    console.error("HEALTH ERROR:", err);
 
     res.status(500).json({
       status: 'error',
