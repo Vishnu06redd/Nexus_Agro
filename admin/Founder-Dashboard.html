@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="auth-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus Group — Founder Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #C89B3C;
+  --gold-light: #D4A94A;
+  --gold-dim: rgba(200,155,60,0.12);
+  --bg: #F8F6F2;
+  --bg2: #F0EDE6;
+  --white: #FFFFFF;
+  --dark: #1B1B1B;
+  --gray: #8C8C8C;
+  --gray2: #BDBDBD;
+  --border: #E9E4DB;
+  --sidebar-w: 200px;
+  --topbar-h: 64px;
+  --green: #22C55E;
+  --green-bg: #DCFCE7;
+  --green-text: #166534;
+  --blue-bg: #DBEAFE;
+  --blue-text: #1D4ED8;
+  --amber-bg: #FEF3C7;
+  --amber-text: #92400E;
+  --red-bg: #FEE2E2;
+  --red-text: #991B1B;
+  --purple-bg: #EDE9FE;
+  --purple-text: #5B21B6;
+}
+
+html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--dark); overflow: hidden; }
+
+/* ── LAYOUT ── */
+.app { display: flex; height: 100vh; overflow: hidden; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+  z-index: 100;
+}
+.sidebar::-webkit-scrollbar { width: 0; }
+
+.sidebar-logo {
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.sidebar-logo svg { width: 48px; height: 48px; }
+.sidebar-logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+.sidebar-logo-sub {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: var(--gray);
+  text-transform: uppercase;
+}
+
+.sidebar-nav { flex: 1; padding: 12px 10px; }
+.sidebar-section-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--gray2);
+  text-transform: uppercase;
+  padding: 12px 8px 6px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray);
+  text-decoration: none;
+  position: relative;
+  margin-bottom: 1px;
+}
+.nav-item:hover { background: var(--bg); color: var(--dark); }
+.nav-item.active {
+  background: var(--gold-dim);
+  color: var(--gold);
+  font-weight: 600;
+}
+.nav-item.active .nav-icon { color: var(--gold); }
+.nav-icon { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--gold);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  line-height: 16px;
+}
+.nav-badge.blue { background: #3B82F6; }
+
+.sidebar-version {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sidebar-avatar-sm {
+  width: 32px;
+  height: 32px;
+  background: var(--gold-dim);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar-version-text { font-size: 11px; color: var(--gray); }
+.sidebar-version-text strong { display: block; font-size: 12px; color: var(--dark); }
+
+/* ── MAIN ── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+/* ── TOPBAR ── */
+.topbar {
+  height: var(--topbar-h);
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  flex-shrink: 0;
+  z-index: 50;
+}
+.topbar-menu-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.topbar-menu-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--gray);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.topbar-search {
+  flex: 1;
+  max-width: 320px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0 14px;
+  height: 38px;
+}
+.topbar-search input {
+  border: none;
+  background: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--dark);
+  outline: none;
+  flex: 1;
+}
+.topbar-search input::placeholder { color: var(--gray2); }
+.topbar-search-kbd {
+  font-size: 10px;
+  color: var(--gray2);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: monospace;
+}
+
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+
+.topbar-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--dark);
+}
+.topbar-date .date-val { font-weight: 600; }
+.topbar-date .date-day { color: var(--gray); }
+
+.topbar-icon-btn {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: border-color 0.15s;
+}
+.topbar-icon-btn:hover { border-color: var(--gold); }
+.topbar-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  background: var(--gold);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid white;
+}
+.topbar-count.red { background: #EF4444; }
+
+.topbar-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 4px 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  background: var(--white);
+}
+.topbar-profile:hover { border-color: var(--gold); }
+.topbar-profile-info { text-align: right; }
+.topbar-profile-name { font-size: 13px; font-weight: 600; color: var(--dark); }
+.topbar-profile-role { font-size: 11px; color: var(--gray); }
+.topbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--gold-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.topbar-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.topbar-chevron { font-size: 10px; color: var(--gray); margin-right: 4px; }
+
+.topbar-export-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dark);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.topbar-export-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── CONTENT ── */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.content::-webkit-scrollbar { width: 4px; }
+.content::-webkit-scrollbar-track { background: transparent; }
+.content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ── PAGE HEADER ── */
+.page-header { display: flex; align-items: flex-end; justify-content: space-between; }
+.page-header-left {}
+.page-greeting { font-size: 13px; color: var(--gray); margin-bottom: 2px; }
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.online-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
+  50% { box-shadow: 0 0 0 6px rgba(34,197,94,0.1); }
+}
+.page-subtitle { font-size: 13px; color: var(--gray); margin-top: 4px; }
+
+/* ── KPI ROW ── */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+.kpi-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: all 0.2s;
+  cursor: default;
+}
+.kpi-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,155,60,0.1); }
+.kpi-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.kpi-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.kpi-label { font-size: 11px; color: var(--gray); font-weight: 500; line-height: 1.3; }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+  line-height: 1;
+}
+.kpi-meta { font-size: 11px; display: flex; align-items: center; gap: 4px; }
+.kpi-up { color: #22C55E; }
+.kpi-down { color: #EF4444; }
+.kpi-neutral { color: var(--gold); }
+
+/* ── GRID LAYOUTS ── */
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; align-items: start; }
+.grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
+.grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; align-items: start; }
+.grid-3-2 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px; align-items: start; }
+
+/* ── CARD ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.card-title { font-size: 14px; font-weight: 700; color: var(--dark); }
+.card-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.card-link:hover { opacity: 0.75; }
+
+/* ── CHART AREA ── */
+.chart-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.chart-growth { font-size: 12px; color: var(--green); font-weight: 600; }
+.chart-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--dark);
+  cursor: pointer;
+  background: var(--white);
+}
+.chart-wrap { position: relative; height: 160px; }
+
+/* ── TOP COUNTRIES ── */
+.top-countries-chart { position: relative; display: flex; justify-content: center; margin-bottom: 12px; }
+.donut-wrap { position: relative; width: 130px; height: 130px; }
+.country-legend { display: flex; flex-direction: column; gap: 6px; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.legend-name { flex: 1; color: var(--dark); font-weight: 500; }
+.legend-pct { color: var(--gray); font-weight: 600; }
+
+/* ── QUOTE TABLE ── */
+.quote-table { width: 100%; border-collapse: collapse; }
+.quote-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  padding: 0 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.quote-table td {
+  padding: 10px 8px;
+  font-size: 12px;
+  color: var(--dark);
+  border-bottom: 1px solid var(--bg);
+  vertical-align: middle;
+}
+.quote-table tr:last-child td { border-bottom: none; }
+.quote-table tr:hover td { background: var(--bg); }
+.buyer-name { font-weight: 600; font-size: 12px; }
+.flag-country { display: flex; align-items: center; gap: 5px; }
+
+/* ── STATUS BADGE ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.badge-new { background: var(--amber-bg); color: var(--amber-text); }
+.badge-pending { background: var(--blue-bg); color: var(--blue-text); }
+.badge-contacted { background: var(--green-bg); color: var(--green-text); }
+.badge-in-transit { background: var(--amber-bg); color: var(--amber-text); }
+.badge-confirmed { background: var(--green-bg); color: var(--green-text); }
+.badge-processing { background: var(--purple-bg); color: var(--purple-text); }
+
+/* ── SHIPMENT TABLE ── */
+.shipment-table { width: 100%; border-collapse: collapse; }
+.shipment-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  padding: 0 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.shipment-table td {
+  padding: 10px 8px;
+  font-size: 12px;
+  color: var(--dark);
+  border-bottom: 1px solid var(--bg);
+  vertical-align: middle;
+}
+.shipment-table tr:last-child td { border-bottom: none; }
+.shipment-table tr:hover td { background: var(--bg); }
+
+.progress-bar-wrap { width: 72px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-bar-fill { height: 100%; border-radius: 3px; background: var(--gold); transition: width 0.6s ease; }
+
+/* ── MESSAGES ── */
+.message-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bg);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.message-item:hover { background: var(--bg); margin: 0 -20px; padding: 10px 20px; }
+.message-item:last-child { border-bottom: none; }
+.msg-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+  font-family: 'Playfair Display', serif;
+}
+.msg-body { flex: 1; min-width: 0; }
+.msg-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+.msg-name { font-size: 12px; font-weight: 600; color: var(--dark); }
+.msg-time { font-size: 10px; color: var(--gray); white-space: nowrap; }
+.msg-text { font-size: 11px; color: var(--gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.msg-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+
+/* ── NOTIFICATIONS ── */
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bg);
+}
+.notif-item:last-child { border-bottom: none; }
+.notif-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--gold-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.notif-body { flex: 1; }
+.notif-text { font-size: 12px; font-weight: 500; color: var(--dark); margin-bottom: 2px; line-height: 1.4; }
+.notif-time { font-size: 10px; color: var(--gray); }
+
+/* ── AI ASSISTANT ── */
+.ai-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 200;
+}
+.ai-fab-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 16px;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.ai-fab-btn:hover { border-color: var(--gold); box-shadow: 0 12px 40px rgba(200,155,60,0.2); }
+.ai-fab-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.ai-fab-text { text-align: left; }
+.ai-fab-title { font-size: 12px; font-weight: 700; color: var(--dark); }
+.ai-fab-sub { font-size: 10px; color: var(--gray); }
+.ai-fab-chevron { font-size: 10px; color: var(--gray); }
+
+.ai-panel {
+  display: none;
+  position: fixed;
+  bottom: 84px;
+  right: 24px;
+  width: 320px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  z-index: 200;
+  overflow: hidden;
+  flex-direction: column;
+}
+.ai-panel.open { display: flex; }
+.ai-panel-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ai-panel-icon {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.ai-panel-title { font-size: 13px; font-weight: 700; color: var(--dark); }
+.ai-panel-body { flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.ai-bubble {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--dark);
+  line-height: 1.5;
+}
+.ai-bubble.user { background: var(--gold-dim); border: 1px solid rgba(200,155,60,0.2); align-self: flex-end; max-width: 80%; }
+.ai-chips { display: flex; flex-direction: column; gap: 6px; }
+.ai-chip {
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 11px;
+  color: var(--dark);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--white);
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+.ai-chip:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+.ai-panel-input {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+}
+.ai-panel-input input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+  color: var(--dark);
+  background: var(--bg);
+}
+.ai-panel-input input:focus { border-color: var(--gold); }
+.ai-send-btn {
+  width: 32px;
+  height: 32px;
+  background: var(--gold);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.ai-send-btn:hover { background: var(--gold-light); }
+
+/* ── FOOTER ── */
+.dash-footer {
+  padding: 12px 24px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--gray);
+  background: var(--white);
+  flex-shrink: 0;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.kpi-value { animation: countUp 0.4s ease forwards; }
+
+/* ── SCROLLBAR ── */
+.content::-webkit-scrollbar { width: 5px; }
+.content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1200px) {
+  .kpi-row { grid-template-columns: repeat(4, 1fr); }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-3-2 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  :root { --sidebar-w: 60px; }
+  .sidebar-logo-name, .sidebar-logo-sub, .nav-item span, .sidebar-version-text { display: none; }
+  .nav-badge { display: none; }
+  .sidebar-logo { align-items: center; }
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .grid-3, .grid-2-1, .grid-1-2, .grid-3-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ══════ SIDEBAR ══════ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="#C89B3C" stroke-width="1.5" fill="none"/>
+        <ellipse cx="20" cy="20" rx="8" ry="18" stroke="#C89B3C" stroke-width="1" fill="none"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#C89B3C" stroke-width="1"/>
+        <line x1="4" y1="12" x2="36" y2="12" stroke="#C89B3C" stroke-width="0.8"/>
+        <line x1="4" y1="28" x2="36" y2="28" stroke="#C89B3C" stroke-width="0.8"/>
+        <path d="M14 8L26 32" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="sidebar-logo-name">NEXUS GROUP</span>
+      <span class="sidebar-logo-sub">Connecting Global Trade</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-item active">
+        <span class="nav-icon">⊞</span>
+        <span>Dashboard</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">📦</span>
+        <span>Products</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">👥</span>
+        <span>Buyers</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">🏭</span>
+        <span>Suppliers</span>
+      </div>
+
+      <div class="sidebar-section-label">Operations</div>
+      <div class="nav-item">
+        <span class="nav-icon">📋</span>
+        <span>Quote Requests</span>
+        <span class="nav-badge">14</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">💬</span>
+        <span>Contact Messages</span>
+        <span class="nav-badge">6</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">🚢</span>
+        <span>Shipments</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">🌍</span>
+        <span>Countries</span>
+      </div>
+
+      <div class="sidebar-section-label">Finance</div>
+      <div class="nav-item">
+        <span class="nav-icon">📊</span>
+        <span>Analytics</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">₹</span>
+        <span>Revenue</span>
+      </div>
+
+      <div class="sidebar-section-label">System</div>
+      <div class="nav-item">
+        <span class="nav-icon">👤</span>
+        <span>Users</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">⚙️</span>
+        <span>Settings</span>
+      </div>
+      <div class="nav-item" style="color:#EF4444;" id="aiNavItem">
+        <span class="nav-icon">✦</span>
+        <span>AI Assistant</span>
+        <span class="nav-badge" style="background:#EF4444;">New</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-version">
+      <div class="sidebar-avatar-sm">✦</div>
+      <div class="sidebar-version-text">
+        <strong>NEXUS GROUP</strong>
+        v1.0.0 ▾
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══════ MAIN ══════ -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <button class="topbar-menu-btn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="topbar-search">
+        <span style="font-size:14px;color:var(--gray);">🔍</span>
+        <input type="text" placeholder="Search anything...">
+        <span class="topbar-search-kbd">⌘K</span>
+      </div>
+
+      <div class="topbar-right">
+        <div class="topbar-date">
+          <span style="font-size:14px;">📅</span>
+          <span class="date-val" id="topbarDate">May 28, 2025</span>
+          <span class="date-day" id="topbarDay">Wednesday</span>
+        </div>
+
+        <div class="topbar-icon-btn" title="Notifications">
+          🔔
+          <span class="topbar-count">8</span>
+        </div>
+        <div class="topbar-icon-btn" title="Messages">
+          ✉️
+          <span class="topbar-count red">6</span>
+        </div>
+
+        <div class="topbar-profile">
+          <div class="topbar-profile-info">
+            <div class="topbar-profile-name">Kamalesh Reddy</div>
+            <div class="topbar-profile-role">Founder & CEO</div>
+          </div>
+          <div class="topbar-avatar">K</div>
+          <span class="topbar-chevron">▾</span>
+        </div>
+
+        <button class="topbar-export-btn">
+          ⬇ Export Report
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-greeting">Welcome back,</div>
+          <div class="page-title">
+            Founder Kamalesh
+            <span class="online-dot"></span>
+          </div>
+          <div class="page-subtitle">Here's everything happening with Nexus Group today.</div>
+        </div>
+      </div>
+
+      <!-- KPI Row -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon">📦</div>
+            <div class="kpi-label">Total Products</div>
+          </div>
+          <div class="kpi-value" data-target="128">128</div>
+          <div class="kpi-meta"><span class="kpi-up">↑ 12.5%</span> this month</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon">📋</div>
+            <div class="kpi-label">Pending Quotes</div>
+          </div>
+          <div class="kpi-value">14</div>
+          <div class="kpi-meta"><span class="kpi-up">↑ 7 new</span> today</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon">🛒</div>
+            <div class="kpi-label">Confirmed Orders</div>
+          </div>
+          <div class="kpi-value">32</div>
+          <div class="kpi-meta"><span class="kpi-up">↑ 18.2%</span> this month</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon">🚢</div>
+            <div class="kpi-label">Shipments</div>
+          </div>
+          <div class="kpi-value">27</div>
+          <div class="kpi-meta"><span class="kpi-neutral">In Transit</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon">₹</div>
+            <div class="kpi-label">Revenue (May)</div>
+          </div>
+          <div class="kpi-value" style="font-size:18px;">₹24.8L</div>
+          <div class="kpi-meta"><span class="kpi-up">↑ 15.7%</span> this month</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon">👥</div>
+            <div class="kpi-label">Active Buyers</div>
+          </div>
+          <div class="kpi-value">86</div>
+          <div class="kpi-meta"><span class="kpi-up">↑ 9 new</span> this month</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon">✉️</div>
+            <div class="kpi-label">Unread Messages</div>
+          </div>
+          <div class="kpi-value">6</div>
+          <div class="kpi-meta"><span class="kpi-neutral" style="cursor:pointer;text-decoration:underline;">View messages</span></div>
+        </div>
+      </div>
+
+      <!-- Row 2: Revenue Chart + Top Countries + Quote Requests -->
+      <div class="grid-3-2">
+
+        <!-- Revenue Overview -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Revenue Overview</span>
+            <div class="chart-selector">This Month ▾</div>
+          </div>
+          <div class="chart-meta">
+            <span class="chart-growth">↑ 15.7% vs last month</span>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="revenueChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Top Countries -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Top Countries</span>
+          </div>
+          <div style="display:flex;gap:16px;align-items:center;">
+            <div class="donut-wrap">
+              <canvas id="donutChart"></canvas>
+            </div>
+            <div class="country-legend">
+              <div class="legend-item"><span class="legend-dot" style="background:#C89B3C;"></span><span class="legend-name">UAE</span><span class="legend-pct">28%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#D4A94A;"></span><span class="legend-name">Saudi Arabia</span><span class="legend-pct">22%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#E0BE78;"></span><span class="legend-name">Qatar</span><span class="legend-pct">18%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#EDD59E;"></span><span class="legend-name">Oman</span><span class="legend-pct">12%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#F4E8C4;"></span><span class="legend-name">Kuwait</span><span class="legend-pct">8%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#E9E4DB;"></span><span class="legend-name">Others</span><span class="legend-pct">12%</span></div>
+            </div>
+          </div>
+          <a href="#" class="card-link" style="display:block;text-align:center;margin-top:14px;padding:8px;border:1px solid var(--border);border-radius:8px;">View All Countries →</a>
+        </div>
+
+        <!-- Latest Quote Requests -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Latest Quote Requests</span>
+            <a class="card-link">View All</a>
+          </div>
+          <table class="quote-table">
+            <thead>
+              <tr>
+                <th>Buyer</th>
+                <th>Country</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="buyer-name">Al-Ameen Trading</div></td>
+                <td><div class="flag-country">🇦🇪 UAE</div></td>
+                <td>Green Chilli</td>
+                <td>25 Ton</td>
+                <td><span class="badge badge-new">New</span></td>
+                <td>May 28</td>
+              </tr>
+              <tr>
+                <td><div class="buyer-name">Fresh Foods Co.</div></td>
+                <td><div class="flag-country">🇶🇦 Qatar</div></td>
+                <td>Onion</td>
+                <td>40 Ton</td>
+                <td><span class="badge badge-pending">Pending</span></td>
+                <td>May 28</td>
+              </tr>
+              <tr>
+                <td><div class="buyer-name">Al Waha Foods</div></td>
+                <td><div class="flag-country">🇸🇦 Saudi Arabia</div></td>
+                <td>Ginger</td>
+                <td>15 Ton</td>
+                <td><span class="badge badge-new">New</span></td>
+                <td>May 28</td>
+              </tr>
+              <tr>
+                <td><div class="buyer-name">Oceanic Exports</div></td>
+                <td><div class="flag-country">🇮🇪 Oarlic</div></td>
+                <td>Garlic</td>
+                <td>10 Ton</td>
+                <td><span class="badge badge-pending">Pending</span></td>
+                <td>May 27</td>
+              </tr>
+              <tr>
+                <td><div class="buyer-name">Al Baraka Import</div></td>
+                <td><div class="flag-country">🇰🇼 Kuwait</div></td>
+                <td>Potato</td>
+                <td>30 Ton</td>
+                <td><span class="badge badge-contacted">Contacted</span></td>
+                <td>May 27</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- Row 3: Shipment Tracking + Messages + Notifications -->
+      <div class="grid-3">
+
+        <!-- Shipment Tracking -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Shipment Tracking</span>
+            <a class="card-link">View All</a>
+          </div>
+          <table class="shipment-table">
+            <thead>
+              <tr>
+                <th>Shipment No.</th>
+                <th>Container</th>
+                <th>Country</th>
+                <th>ETA</th>
+                <th>Status</th>
+                <th>Progress</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:600;color:var(--dark);">NXS-25-051</td>
+                <td style="color:var(--gray);font-size:11px;">TRHU8892330</td>
+                <td><div class="flag-country">🇦🇪 UAE</div></td>
+                <td>May 31, 2025</td>
+                <td><span class="badge badge-in-transit">In Transit</span></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:70%;"></div></div>
+                    <span style="font-size:10px;color:var(--gray);">70%</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;color:var(--dark);">NXS-25-052</td>
+                <td style="color:var(--gray);font-size:11px;">TCNU1234567</td>
+                <td><div class="flag-country">🇶🇦 Qatar</div></td>
+                <td>Jun 02, 2025</td>
+                <td><span class="badge badge-in-transit">In Transit</span></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:45%;"></div></div>
+                    <span style="font-size:10px;color:var(--gray);">45%</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;color:var(--dark);">NXS-25-053</td>
+                <td style="color:var(--gray);font-size:11px;">MSCU7654321</td>
+                <td><div class="flag-country">🇸🇦 Saudi Arabia</div></td>
+                <td>Jun 05, 2025</td>
+                <td><span class="badge badge-processing">Processing</span></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:25%;background:#A78BFA;"></div></div>
+                    <span style="font-size:10px;color:var(--gray);">25%</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;color:var(--dark);">NXS-25-054</td>
+                <td style="color:var(--gray);font-size:11px;">TCLU2468101</td>
+                <td><div class="flag-country">🇴🇲 Oman</div></td>
+                <td>Jun 06, 2025</td>
+                <td><span class="badge badge-contacted">Confirmed</span></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:10%;background:#22C55E;"></div></div>
+                    <span style="font-size:10px;color:var(--gray);">10%</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Recent Messages -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Recent Messages</span>
+            <a class="card-link">View All</a>
+          </div>
+          <div>
+            <div class="message-item">
+              <div class="msg-avatar" style="background:#2563EB;">M</div>
+              <div class="msg-body">
+                <div class="msg-top">
+                  <span class="msg-name">Mohammed Ali</span>
+                  <span class="msg-time">2m ago</span>
+                </div>
+                <div class="msg-text">We are interested in 50 ton Green Chilli...</div>
+              </div>
+              <div class="msg-dot"></div>
+            </div>
+            <div class="message-item">
+              <div class="msg-avatar" style="background:#16A34A;">A</div>
+              <div class="msg-body">
+                <div class="msg-top">
+                  <span class="msg-name">Ahmed Hassan</span>
+                  <span class="msg-time">15m ago</span>
+                </div>
+                <div class="msg-text">Please share the best price for Garlic...</div>
+              </div>
+              <div class="msg-dot"></div>
+            </div>
+            <div class="message-item">
+              <div class="msg-avatar" style="background:#C89B3C;">A</div>
+              <div class="msg-body">
+                <div class="msg-top">
+                  <span class="msg-name">Al-Ameen Trading Co.</span>
+                  <span class="msg-time">1h ago</span>
+                </div>
+                <div class="msg-text">Looking forward to your reply.</div>
+              </div>
+            </div>
+            <div class="message-item">
+              <div class="msg-avatar" style="background:#7C3AED;">F</div>
+              <div class="msg-body">
+                <div class="msg-top">
+                  <span class="msg-name">Fresh Foods Co.</span>
+                  <span class="msg-time">2h ago</span>
+                </div>
+                <div class="msg-text">When can you ship the Onion?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Notifications</span>
+            <a class="card-link">View All</a>
+          </div>
+          <div>
+            <div class="notif-item">
+              <div class="notif-icon">📋</div>
+              <div class="notif-body">
+                <div class="notif-text">New quote request received</div>
+                <div class="notif-time">2m ago</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-icon">🚢</div>
+              <div class="notif-body">
+                <div class="notif-text">Shipment NXS-25-051 is in transit</div>
+                <div class="notif-time">15m ago</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-icon">👤</div>
+              <div class="notif-body">
+                <div class="notif-text">New buyer registered from UAE</div>
+                <div class="notif-time">1h ago</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-icon">💰</div>
+              <div class="notif-body">
+                <div class="notif-text">Payment received from Al Waha Foods</div>
+                <div class="notif-time">2h ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div><!-- end .content -->
+
+    <!-- Footer -->
+    <div class="dash-footer">© 2025 Nexus Group. All rights reserved.</div>
+
+  </div><!-- end .main -->
+</div><!-- end .app -->
+
+<!-- AI Assistant FAB -->
+<div class="ai-fab">
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-icon">✦</div>
+      <div>
+        <div class="ai-panel-title">Nexus AI Assistant</div>
+      </div>
+    </div>
+    <div class="ai-panel-body">
+      <div class="ai-bubble">Hello, Founder. I'm here to help you run Nexus Group. What would you like to know?</div>
+      <div class="ai-chips">
+        <button class="ai-chip" onclick="aiQuery('How many orders today?')">📦 How many orders today?</button>
+        <button class="ai-chip" onclick="aiQuery('Who is our top buyer?')">👑 Who is our top buyer?</button>
+        <button class="ai-chip" onclick="aiQuery('What is today\'s revenue?')">₹ What is today's revenue?</button>
+        <button class="ai-chip" onclick="aiQuery('Show pending shipments')">🚢 Show pending shipments</button>
+        <button class="ai-chip" onclick="aiQuery('Summarize today\'s business')">📊 Summarize today's business</button>
+      </div>
+    </div>
+    <div class="ai-panel-input">
+      <input type="text" placeholder="Ask anything about your business..." id="aiInput" onkeydown="if(event.key==='Enter')aiSend()">
+      <button class="ai-send-btn" onclick="aiSend()">→</button>
+    </div>
+  </div>
+  <button class="ai-fab-btn" onclick="toggleAI()">
+    <div class="ai-fab-icon">✦</div>
+    <div class="ai-fab-text">
+      <div class="ai-fab-title">Nexus AI Assistant</div>
+      <div class="ai-fab-sub">Ask anything about your business</div>
+    </div>
+    <span class="ai-fab-chevron" id="aiChevron">▲</span>
+  </button>
+</div>
+
+<script>
+// ── DATE ──
+function updateDate() {
+  const now = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+  document.getElementById('topbarDate').textContent = dateStr;
+  document.getElementById('topbarDay').textContent = days[now.getDay()];
+}
+updateDate();
+
+// ── CHARTS ──
+// Revenue Line Chart
+const ctx = document.getElementById('revenueChart').getContext('2d');
+const revenueChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['May 1','','May 7','','May 13','','May 19','','May 25','','May 31'],
+    datasets: [{
+      data: [8,10,12,11,14,13,16,18,20,22,24.8],
+      borderColor: '#C89B3C',
+      backgroundColor: 'rgba(200,155,60,0.08)',
+      fill: true,
+      tension: 0.4,
+      pointBackgroundColor: '#C89B3C',
+      pointRadius: 3,
+      pointHoverRadius: 6,
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: {
+      callbacks: {
+        label: ctx => `₹${ctx.raw}L`
+      },
+      backgroundColor: '#1B1B1B',
+      titleColor: '#C89B3C',
+      bodyColor: '#fff',
+      padding: 10,
+      cornerRadius: 8,
+    }},
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#8C8C8C' } },
+      y: {
+        grid: { color: 'rgba(0,0,0,0.04)' },
+        ticks: {
+          font: { size: 10 }, color: '#8C8C8C',
+          callback: v => `₹${v}L`
+        }
+      }
+    }
+  }
+});
+
+// Donut Chart
+const dCtx = document.getElementById('donutChart').getContext('2d');
+new Chart(dCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['UAE','Saudi Arabia','Qatar','Oman','Kuwait','Others'],
+    datasets: [{
+      data: [28,22,18,12,8,12],
+      backgroundColor: ['#C89B3C','#D4A94A','#E0BE78','#EDD59E','#F4E8C4','#E9E4DB'],
+      borderWidth: 0,
+      hoverOffset: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}%` },
+        backgroundColor: '#1B1B1B',
+        bodyColor: '#fff',
+        padding: 8,
+        cornerRadius: 8,
+      }
+    },
+    cutout: '65%',
+  }
+});
+
+// ── AI PANEL ──
+let aiOpen = false;
+function toggleAI() {
+  aiOpen = !aiOpen;
+  document.getElementById('aiPanel').classList.toggle('open', aiOpen);
+  document.getElementById('aiChevron').textContent = aiOpen ? '▼' : '▲';
+}
+
+document.getElementById('aiNavItem').addEventListener('click', function() {
+  if (!aiOpen) toggleAI();
+});
+
+const aiResponses = {
+  'How many orders today?': 'Today you have <strong>7 new orders</strong>, with 3 confirmed and 4 pending review.',
+  "Who is our top buyer?": 'Your top buyer this month is <strong>Al-Ameen Trading (UAE)</strong> with ₹4.2L in orders.',
+  "What is today's revenue?": "Today's revenue stands at <strong>₹1.8 Lakhs</strong>, tracking 15.7% ahead of this day last month.",
+  'Show pending shipments': 'You have <strong>4 active shipments</strong>: NXS-25-051 (UAE, 70%), NXS-25-052 (Qatar, 45%), NXS-25-053 (Saudi Arabia, 25%), NXS-25-054 (Oman, 10%).',
+  "Summarize today's business": 'Today looks strong: 7 new orders, ₹1.8L revenue, 6 unread messages from buyers, and 4 shipments in progress. Al-Ameen Trading sent a new 50-ton inquiry for Green Chilli.'
+};
+
+function aiQuery(q) {
+  const panel = document.getElementById('aiPanel').querySelector('.ai-panel-body');
+  const userBubble = document.createElement('div');
+  userBubble.className = 'ai-bubble user';
+  userBubble.textContent = q;
+  panel.appendChild(userBubble);
+
+  setTimeout(() => {
+    const aiBubble = document.createElement('div');
+    aiBubble.className = 'ai-bubble';
+    aiBubble.innerHTML = aiResponses[q] || 'I\'m analyzing your business data... Please connect the backend for live answers.';
+    panel.appendChild(aiBubble);
+    panel.scrollTop = panel.scrollHeight;
+  }, 600);
+
+  panel.scrollTop = panel.scrollHeight;
+}
+
+function aiSend() {
+  const input = document.getElementById('aiInput');
+  const val = input.value.trim();
+  if (!val) return;
+  aiQuery(val);
+  input.value = '';
+}
+
+// ── NAV ACTIVE STATE ──
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    if (this.id === 'aiNavItem') return;
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
