@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="../../js/admin/auth-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buyers — Nexus Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/admin/_shared.css">
+
+<style>
+.buyer-av { width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar"><div class="sidebar-logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="#C89B3C" stroke-width="1.5" fill="none"/>
+        <ellipse cx="20" cy="20" rx="8" ry="18" stroke="#C89B3C" stroke-width="1" fill="none"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#C89B3C" stroke-width="1"/>
+        <line x1="4" y1="12" x2="36" y2="12" stroke="#C89B3C" stroke-width="0.8"/>
+        <line x1="4" y1="28" x2="36" y2="28" stroke="#C89B3C" stroke-width="0.8"/>
+        <path d="M14 8L26 32" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="sidebar-logo-name">NEXUS GROUP</span>
+      <span class="sidebar-logo-sub">Connecting Global Trade</span>
+    </div><nav class="sidebar-nav"><a href="dashboard.html" class="nav-item "><span class="nav-icon">⊞</span><span>Dashboard</span></a><a href="products.html" class="nav-item "><span class="nav-icon">📦</span><span>Products</span></a><a href="buyers.html" class="nav-item active"><span class="nav-icon">👥</span><span>Buyers</span></a><a href="suppliers.html" class="nav-item "><span class="nav-icon">🏭</span><span>Suppliers</span></a><div class="sidebar-section-label">Operations</div><a href="quotes.html" class="nav-item "><span class="nav-icon">📋</span><span>Quote Requests</span><span class="nav-badge">14</span></a><a href="messages.html" class="nav-item "><span class="nav-icon">💬</span><span>Messages</span></a><a href="orders.html" class="nav-item "><span class="nav-icon">🛒</span><span>Orders</span></a><a href="shipments.html" class="nav-item "><span class="nav-icon">🚢</span><span>Shipments</span></a><a href="countries.html" class="nav-item "><span class="nav-icon">🌍</span><span>Countries</span></a><div class="sidebar-section-label">Finance</div><a href="revenue.html" class="nav-item "><span class="nav-icon">₹</span><span>Revenue</span></a><a href="analytics.html" class="nav-item "><span class="nav-icon">📊</span><span>Analytics</span></a><div class="sidebar-section-label">System</div><a href="users.html" class="nav-item "><span class="nav-icon">👤</span><span>Users</span></a><a href="settings.html" class="nav-item "><span class="nav-icon">⚙️</span><span>Settings</span></a><a href="assistant.html" class="nav-item "><span class="nav-icon">✦</span><span>AI Assistant</span></a><hr style="border:none;border-top:1px solid var(--border);margin:10px 0;"><a href="../index.html" class="nav-item" style="color:#EF4444;" onclick="adminLogout();return false;"><span class="nav-icon">⏻</span><span>Logout</span></a></nav><div class="sidebar-footer">
+      <div class="sidebar-avatar-sm">K</div>
+      <div class="sidebar-footer-text"><strong>Kamalesh Reddy</strong>Founder &amp; CEO</div>
+    </div></aside>
+<div class="main">
+<header class="topbar">
+      <div class="topbar-search">
+        <span style="font-size:13px;color:var(--gray);">🔍</span>
+        <input type="text" placeholder="Search anything...">
+        <span class="topbar-search-kbd">⌘K</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date">
+          <span>📅</span>
+          <span class="date-val" id="topbarDate"></span>
+          <span class="date-day" id="topbarDay"></span>
+        </div>
+        <div class="topbar-icon-btn">🔔<span class="topbar-count">8</span></div>
+        <div class="topbar-icon-btn">✉️<span class="topbar-count red">6</span></div>
+        <div class="topbar-profile">
+          <div class="topbar-profile-info">
+            <div class="topbar-profile-name">Kamalesh Reddy</div>
+            <div class="topbar-profile-role">Founder &amp; CEO</div>
+          </div>
+          <div class="topbar-avatar">K</div>
+        </div>
+      </div>
+    </header>
+<div class="content">
+
+<div class="page-header">
+  <div>
+    <div class="page-title">Buyers</div>
+    <div class="page-subtitle">Manage your international buyer network</div>
+  </div>
+  <div class="page-actions">
+    <button class="btn btn-secondary btn-sm">⬇ Export CSV</button>
+    <button class="btn btn-primary" onclick="openModal('addBuyerModal')">+ Add Buyer</button>
+  </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-icon-wrap">👥</div><div class="kpi-value">86</div><div class="kpi-label">Total Buyers</div><div class="kpi-trend up">↑ 9 new this month</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">✅</div><div class="kpi-value">71</div><div class="kpi-label">Active Buyers</div><div class="kpi-trend up">83%</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">🌍</div><div class="kpi-value">14</div><div class="kpi-label">Countries</div><div class="kpi-trend neutral">—</div></div>
+  <div class="kpi-card"><div class="kpi-icon-wrap">🏆</div><div class="kpi-value">₹4.2L</div><div class="kpi-label">Top Buyer Value</div><div class="kpi-trend up">Al-Ameen</div></div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">Buyer Directory</span>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <select class="form-select" style="width:auto;padding:5px 10px;font-size:11.5px;"><option>All Countries</option><option>UAE</option><option>Saudi Arabia</option><option>Qatar</option><option>Kuwait</option><option>Oman</option></select>
+      <div class="topbar-search" style="max-width:200px;margin:0;"><span style="font-size:12px;color:var(--gray);">🔍</span><input type="text" placeholder="Search buyers..."></div>
+    </div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th></th><th>Buyer / Company</th><th>Country</th><th>Email</th><th>Phone</th><th>Total Orders</th><th>Last Contact</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr onclick="openDrawer('buyerDrawer')"><td><div class="buyer-av" style="background:#2563EB;">A</div></td><td><strong>Al-Ameen Trading Co.</strong><br><span style="font-size:10px;color:var(--gray);">Mohammed Al-Ameen · General Manager</span></td><td>🇦🇪 UAE</td><td style="font-size:11.5px;">info@alameen.ae</td><td style="font-size:11.5px;">+971 50 123 4567</td><td><strong>12</strong></td><td style="font-size:11px;color:var(--gray);">Today</td><td><span class="badge badge-active">Active</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('buyerDrawer')">👁</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openModal('addBuyerModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();showToast('Buyer deleted','success')">🗑</button></div></td></tr>
+      <tr onclick="openDrawer('buyerDrawer')"><td><div class="buyer-av" style="background:#16A34A;">F</div></td><td><strong>Fresh Foods Co.</strong><br><span style="font-size:10px;color:var(--gray);">Ahmed Hassan · Procurement Head</span></td><td>🇶🇦 Qatar</td><td style="font-size:11.5px;">procurement@freshfoods.qa</td><td style="font-size:11.5px;">+974 44 123 456</td><td><strong>8</strong></td><td style="font-size:11px;color:var(--gray);">Yesterday</td><td><span class="badge badge-active">Active</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('buyerDrawer')">👁</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openModal('addBuyerModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();showToast('Buyer deleted','success')">🗑</button></div></td></tr>
+      <tr onclick="openDrawer('buyerDrawer')"><td><div class="buyer-av" style="background:#C89B3C;">A</div></td><td><strong>Al Waha Foods LLC</strong><br><span style="font-size:10px;color:var(--gray);">Khalid Al-Rashidi · Director</span></td><td>🇸🇦 Saudi Arabia</td><td style="font-size:11.5px;">khalid@alwaha.sa</td><td style="font-size:11.5px;">+966 55 987 6543</td><td><strong>15</strong></td><td style="font-size:11px;color:var(--gray);">May 26</td><td><span class="badge badge-active">Active</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('buyerDrawer')">👁</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openModal('addBuyerModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();showToast('Buyer deleted','success')">🗑</button></div></td></tr>
+      <tr onclick="openDrawer('buyerDrawer')"><td><div class="buyer-av" style="background:#7C3AED;">A</div></td><td><strong>Al Baraka Import Est.</strong><br><span style="font-size:10px;color:var(--gray);">Yousef Al-Mutairi · CEO</span></td><td>🇰🇼 Kuwait</td><td style="font-size:11.5px;">ceo@albaraka.kw</td><td style="font-size:11.5px;">+965 99 876 543</td><td><strong>6</strong></td><td style="font-size:11px;color:var(--gray);">May 27</td><td><span class="badge badge-active">Active</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('buyerDrawer')">👁</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openModal('addBuyerModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();showToast('Buyer deleted','success')">🗑</button></div></td></tr>
+      <tr onclick="openDrawer('buyerDrawer')"><td><div class="buyer-av" style="background:#DC2626;">O</div></td><td><strong>Oceanic Exports LLC</strong><br><span style="font-size:10px;color:var(--gray);">Tariq Abdullah · Manager</span></td><td>🇴🇲 Oman</td><td style="font-size:11.5px;">tariq@oceanic.om</td><td style="font-size:11.5px;">+968 99 123 456</td><td><strong>4</strong></td><td style="font-size:11px;color:var(--gray);">May 22</td><td><span class="badge badge-inactive">Inactive</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('buyerDrawer')">👁</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openModal('addBuyerModal')">✏️</button><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();showToast('Buyer deleted','success')">🗑</button></div></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Buyer Drawer -->
+<div class="drawer-overlay" id="buyerDrawerOverlay" onclick="closeDrawer('buyerDrawer')"></div>
+<div class="drawer" id="buyerDrawer">
+  <div class="drawer-header">
+    <div>
+      <div class="drawer-title">Al-Ameen Trading Co.</div>
+      <div style="font-size:11px;color:var(--gray);margin-top:2px;">🇦🇪 UAE · Active Buyer</div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer('buyerDrawer')">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div><div class="info-section-title">Company Information</div><div class="info-grid">
+      <div class="info-item"><div class="info-label">Company</div><div class="info-value">Al-Ameen Trading Co.</div></div>
+      <div class="info-item"><div class="info-label">Contact Person</div><div class="info-value">Mohammed Al-Ameen</div></div>
+      <div class="info-item"><div class="info-label">Email</div><div class="info-value">info@alameen.ae</div></div>
+      <div class="info-item"><div class="info-label">Phone</div><div class="info-value">+971 50 123 4567</div></div>
+      <div class="info-item"><div class="info-label">Country</div><div class="info-value">🇦🇪 United Arab Emirates</div></div>
+      <div class="info-item"><div class="info-label">Member Since</div><div class="info-value">Jan 2024</div></div>
+    </div></div>
+    <div><div class="info-section-title">Purchase History</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:8px;"><span style="font-size:12px;font-weight:500;">Green Chilli · 25 Ton</span><span class="badge badge-delivered">Delivered</span></div>
+        <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:8px;"><span style="font-size:12px;font-weight:500;">Onion · 40 Ton</span><span class="badge badge-transit">In Transit</span></div>
+        <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:8px;"><span style="font-size:12px;font-weight:500;">Ginger · 10 Ton</span><span class="badge badge-delivered">Delivered</span></div>
+      </div>
+    </div>
+    <div><div class="info-section-title">Notes</div><textarea class="form-textarea" placeholder="Add notes about this buyer..." style="min-height:70px;">Reliable buyer. Always pays within 15 days LC. Prefers Grade A produce only.</textarea></div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn btn-primary btn-sm" onclick="showToast('Notes saved','success')">💾 Save</button>
+    <button class="btn btn-secondary btn-sm" onclick="openModal('addBuyerModal')">✏️ Edit</button>
+    <button class="btn btn-secondary btn-sm">✉️ Message</button>
+    <button class="btn btn-danger btn-sm" onclick="closeDrawer('buyerDrawer');showToast('Buyer deleted','success')">🗑 Delete</button>
+  </div>
+</div>
+
+<!-- Add Buyer Modal -->
+<div class="modal-overlay" id="addBuyerModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add New Buyer</div>
+      <button class="modal-close" onclick="closeModal('addBuyerModal')">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Company Name</label><input class="form-input" placeholder="Al-Ameen Trading Co."></div>
+      <div class="form-group"><label class="form-label">Contact Person</label><input class="form-input" placeholder="Mohammed Al-Ameen"></div>
+      <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="info@company.ae"></div>
+      <div class="form-group"><label class="form-label">Phone</label><input class="form-input" placeholder="+971 50 123 4567"></div>
+      <div class="form-group"><label class="form-label">Country</label><select class="form-select"><option>UAE</option><option>Saudi Arabia</option><option>Qatar</option><option>Kuwait</option><option>Oman</option><option>Bahrain</option></select></div>
+      <div class="form-group"><label class="form-label">Status</label><select class="form-select"><option>Active</option><option>Inactive</option></select></div>
+      <div class="form-group full"><label class="form-label">Notes</label><textarea class="form-textarea" placeholder="Notes about this buyer..."></textarea></div>
+    </div>
+    <div class="form-footer">
+      <button class="btn btn-secondary" onclick="closeModal('addBuyerModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="closeModal('addBuyerModal');showToast('Buyer saved successfully','success')">💾 Save Buyer</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="dash-footer">© 2025 Nexus Group · Bengaluru, India · v1.0.0</div>
+</div>
+</div>
+<div class="ai-fab">
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-icon">✦</div>
+      <div><div class="ai-panel-title">Nexus AI Assistant</div></div>
+      <button class="modal-close" style="margin-left:auto;" onclick="toggleAI()">✕</button>
+    </div>
+    <div class="ai-panel-body">
+      <div class="ai-bubble">Hello, Founder Kamalesh. Ask me anything about Nexus Group.</div>
+      <div class="ai-chips">
+        <button class="ai-chip" onclick="aiQuery('Summarize today\'s business')">📊 Summarize today's business</button>
+        <button class="ai-chip" onclick="aiQuery('Who is our top buyer this month?')">👑 Top buyer this month</button>
+        <button class="ai-chip" onclick="aiQuery('Show pending shipments')">🚢 Pending shipments</button>
+        <button class="ai-chip" onclick="aiQuery('Draft a quotation email')">📝 Draft quotation email</button>
+      </div>
+    </div>
+    <div class="ai-panel-input">
+      <input type="text" placeholder="Ask anything..." id="aiInput" onkeydown="if(event.key==='Enter')aiSend()">
+      <button class="ai-send-btn" onclick="aiSend()">→</button>
+    </div>
+  </div>
+  <button class="ai-fab-btn" onclick="toggleAI()">
+    <div class="ai-fab-icon">✦</div>
+    <div class="ai-fab-text">
+      <div class="ai-fab-title">Nexus AI</div>
+      <div class="ai-fab-sub">Ask about your business</div>
+    </div>
+    <span id="aiChevron" style="font-size:9px;color:var(--gray);">▲</span>
+  </button>
+</div>
+<div class="toast-wrap" id="toastWrap"></div>
+<script src="../../js/admin/_shared.js"></script>
+
+</body>
+</html>

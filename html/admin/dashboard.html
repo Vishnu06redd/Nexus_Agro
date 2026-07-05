@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="../../js/admin/auth-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Nexus Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/admin/_shared.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+.dash-grid-main { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 16px; }
+.dash-grid-bottom { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.chart-wrap { position: relative; height: 160px; }
+.quote-table { width:100%; border-collapse:collapse; }
+.quote-table th { text-align:left; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--gray); padding:0 8px 10px; border-bottom:1px solid var(--border); }
+.quote-table td { padding:9px 8px; font-size:12px; color:var(--dark); border-bottom:1px solid var(--bg); vertical-align:middle; }
+.quote-table tr:last-child td { border-bottom:none; }
+.quote-table tr:hover td { background:var(--bg); }
+.ship-table { width:100%; border-collapse:collapse; }
+.ship-table th { text-align:left; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--gray); padding:0 8px 10px; border-bottom:1px solid var(--border); }
+.ship-table td { padding:9px 8px; font-size:12px; color:var(--dark); border-bottom:1px solid var(--bg); vertical-align:middle; }
+.ship-table tr:last-child td { border-bottom:none; }
+.msg-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--bg); }
+.msg-item:last-child { border-bottom:none; }
+.msg-av { width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:white; flex-shrink:0; }
+.msg-name { font-size:12px; font-weight:600; color:var(--dark); }
+.msg-time { font-size:10px; color:var(--gray); }
+.msg-text { font-size:11px; color:var(--gray); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.notif-item { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid var(--bg); }
+.notif-item:last-child { border-bottom:none; }
+.notif-icon { width:32px; height:32px; border-radius:8px; background:var(--gold-dim); display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+.notif-text { font-size:12px; font-weight:500; color:var(--dark); line-height:1.4; }
+.notif-time { font-size:10px; color:var(--gray); margin-top:2px; }
+.health-score { display:flex; align-items:center; gap:16px; padding:16px; background:linear-gradient(135deg,var(--gold-dim),rgba(200,155,60,0.05)); border:1px solid var(--gold-border); border-radius:12px; }
+.health-num { font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold); line-height:1; }
+.health-label { font-size:11px; color:var(--gray); margin-bottom:2px; }
+.health-status { font-size:13px; font-weight:600; color:var(--green); }
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar"><div class="sidebar-logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="#C89B3C" stroke-width="1.5" fill="none"/>
+        <ellipse cx="20" cy="20" rx="8" ry="18" stroke="#C89B3C" stroke-width="1" fill="none"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#C89B3C" stroke-width="1"/>
+        <line x1="4" y1="12" x2="36" y2="12" stroke="#C89B3C" stroke-width="0.8"/>
+        <line x1="4" y1="28" x2="36" y2="28" stroke="#C89B3C" stroke-width="0.8"/>
+        <path d="M14 8L26 32" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="sidebar-logo-name">NEXUS GROUP</span>
+      <span class="sidebar-logo-sub">Connecting Global Trade</span>
+    </div><nav class="sidebar-nav"><a href="dashboard.html" class="nav-item active"><span class="nav-icon">⊞</span><span>Dashboard</span></a><a href="products.html" class="nav-item "><span class="nav-icon">📦</span><span>Products</span></a><a href="buyers.html" class="nav-item "><span class="nav-icon">👥</span><span>Buyers</span></a><a href="suppliers.html" class="nav-item "><span class="nav-icon">🏭</span><span>Suppliers</span></a><div class="sidebar-section-label">Operations</div><a href="quotes.html" class="nav-item "><span class="nav-icon">📋</span><span>Quote Requests</span><span class="nav-badge">14</span></a><a href="messages.html" class="nav-item "><span class="nav-icon">💬</span><span>Messages</span></a><a href="orders.html" class="nav-item "><span class="nav-icon">🛒</span><span>Orders</span></a><a href="shipments.html" class="nav-item "><span class="nav-icon">🚢</span><span>Shipments</span></a><a href="countries.html" class="nav-item "><span class="nav-icon">🌍</span><span>Countries</span></a><div class="sidebar-section-label">Finance</div><a href="revenue.html" class="nav-item "><span class="nav-icon">₹</span><span>Revenue</span></a><a href="analytics.html" class="nav-item "><span class="nav-icon">📊</span><span>Analytics</span></a><div class="sidebar-section-label">System</div><a href="users.html" class="nav-item "><span class="nav-icon">👤</span><span>Users</span></a><a href="settings.html" class="nav-item "><span class="nav-icon">⚙️</span><span>Settings</span></a><a href="assistant.html" class="nav-item "><span class="nav-icon">✦</span><span>AI Assistant</span></a><hr style="border:none;border-top:1px solid var(--border);margin:10px 0;"><a href="../index.html" class="nav-item" style="color:#EF4444;" onclick="adminLogout();return false;"><span class="nav-icon">⏻</span><span>Logout</span></a></nav><div class="sidebar-footer">
+      <div class="sidebar-avatar-sm">K</div>
+      <div class="sidebar-footer-text"><strong>Kamalesh Reddy</strong>Founder &amp; CEO</div>
+    </div></aside>
+<div class="main">
+<header class="topbar">
+      <div class="topbar-search">
+        <span style="font-size:13px;color:var(--gray);">🔍</span>
+        <input type="text" placeholder="Search anything...">
+        <span class="topbar-search-kbd">⌘K</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date">
+          <span>📅</span>
+          <span class="date-val" id="topbarDate"></span>
+          <span class="date-day" id="topbarDay"></span>
+        </div>
+        <div class="topbar-icon-btn">🔔<span class="topbar-count">8</span></div>
+        <div class="topbar-icon-btn">✉️<span class="topbar-count red">6</span></div>
+        <div class="topbar-profile">
+          <div class="topbar-profile-info">
+            <div class="topbar-profile-name">Kamalesh Reddy</div>
+            <div class="topbar-profile-role">Founder &amp; CEO</div>
+          </div>
+          <div class="topbar-avatar">K</div>
+        </div>
+      </div>
+    </header>
+<div class="content">
+
+<div class="page-header">
+  <div>
+    <div style="font-size:12px;color:var(--gray);margin-bottom:2px;">Welcome back,</div>
+    <div class="page-title">Founder Kamalesh <span class="online-dot"></span></div>
+    <div class="page-subtitle">Here's everything happening with Nexus Group today.</div>
+  </div>
+  <div class="page-actions">
+    <button class="btn btn-secondary btn-sm">⬇ Export Report</button>
+    <button class="btn btn-primary btn-sm">+ New Quote</button>
+  </div>
+</div>
+
+<!-- Health Score + KPIs -->
+<div style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;">
+  <div class="health-score">
+    <div>
+      <div class="health-label">Business Health Score</div>
+      <div class="health-num">87</div>
+      <div class="health-status">↑ Excellent</div>
+    </div>
+    <div style="font-size:11px;color:var(--gray);line-height:1.7;">
+      <div>📦 128 Products active</div>
+      <div>💰 ₹24.8L this month</div>
+      <div>🚢 4 shipments live</div>
+      <div>👥 86 active buyers</div>
+    </div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-icon-wrap">📋</div>
+      <div class="kpi-value">14</div>
+      <div class="kpi-label">Pending Quotes</div>
+      <div class="kpi-trend up">↑ 7 new today</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon-wrap">🛒</div>
+      <div class="kpi-value">32</div>
+      <div class="kpi-label">Confirmed Orders</div>
+      <div class="kpi-trend up">↑ 18.2%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon-wrap">🚢</div>
+      <div class="kpi-value">27</div>
+      <div class="kpi-label">Shipments</div>
+      <div class="kpi-trend neutral">In Transit</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon-wrap">₹</div>
+      <div class="kpi-value" style="font-size:20px;">₹24.8L</div>
+      <div class="kpi-label">Revenue (May)</div>
+      <div class="kpi-trend up">↑ 15.7%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon-wrap">👥</div>
+      <div class="kpi-value">86</div>
+      <div class="kpi-label">Active Buyers</div>
+      <div class="kpi-trend up">↑ 9 new</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon-wrap">✉️</div>
+      <div class="kpi-value">6</div>
+      <div class="kpi-label">Unread Messages</div>
+      <div class="kpi-trend neutral"><a href="quotes.html" style="color:var(--gold);">View →</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- Row 2 -->
+<div class="dash-grid-main">
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Revenue Overview</span>
+      <select class="form-select" style="width:auto;padding:4px 8px;font-size:11px;">
+        <option>This Month</option><option>Last Month</option><option>This Year</option>
+      </select>
+    </div>
+    <div style="font-size:11.5px;color:var(--green);font-weight:600;margin-bottom:6px;">↑ 15.7% vs last month</div>
+    <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Top Countries</span><a class="card-link" href="countries.html">View All</a></div>
+    <div style="display:flex;gap:14px;align-items:center;">
+      <div style="position:relative;width:110px;height:110px;flex-shrink:0;"><canvas id="donutChart"></canvas></div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;">
+        <div style="display:flex;align-items:center;gap:7px;"><span style="width:8px;height:8px;border-radius:50%;background:#C89B3C;flex-shrink:0;"></span><span style="flex:1;">UAE</span><strong>28%</strong></div>
+        <div style="display:flex;align-items:center;gap:7px;"><span style="width:8px;height:8px;border-radius:50%;background:#D4A94A;flex-shrink:0;"></span><span style="flex:1;">Saudi</span><strong>22%</strong></div>
+        <div style="display:flex;align-items:center;gap:7px;"><span style="width:8px;height:8px;border-radius:50%;background:#E0BE78;flex-shrink:0;"></span><span style="flex:1;">Qatar</span><strong>18%</strong></div>
+        <div style="display:flex;align-items:center;gap:7px;"><span style="width:8px;height:8px;border-radius:50%;background:#EDD59E;flex-shrink:0;"></span><span style="flex:1;">Oman</span><strong>12%</strong></div>
+        <div style="display:flex;align-items:center;gap:7px;"><span style="width:8px;height:8px;border-radius:50%;background:#E9E4DB;flex-shrink:0;"></span><span style="flex:1;">Others</span><strong>20%</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Latest Quote Requests</span><a class="card-link" href="quotes.html">View All</a></div>
+    <table class="quote-table">
+      <thead><tr><th>Buyer</th><th>Country</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Al-Ameen Trading</strong><br><span style="color:var(--gray);font-size:10px;">25 Ton · Green Chilli</span></td><td>🇦🇪 UAE</td><td><span class="badge badge-new">New</span></td></tr>
+        <tr><td><strong>Fresh Foods Co.</strong><br><span style="color:var(--gray);font-size:10px;">40 Ton · Onion</span></td><td>🇶🇦 Qatar</td><td><span class="badge badge-pending">Pending</span></td></tr>
+        <tr><td><strong>Al Waha Foods</strong><br><span style="color:var(--gray);font-size:10px;">15 Ton · Ginger</span></td><td>🇸🇦 Saudi</td><td><span class="badge badge-new">New</span></td></tr>
+        <tr><td><strong>Al Baraka Import</strong><br><span style="color:var(--gray);font-size:10px;">30 Ton · Potato</span></td><td>🇰🇼 Kuwait</td><td><span class="badge badge-accepted">Contacted</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Row 3 -->
+<div class="dash-grid-bottom">
+  <div class="card">
+    <div class="card-header"><span class="card-title">Shipment Tracking</span><a class="card-link" href="shipments.html">View All</a></div>
+    <table class="ship-table">
+      <thead><tr><th>Shipment</th><th>Country</th><th>ETA</th><th>Progress</th></tr></thead>
+      <tbody>
+        <tr><td><strong>NXS-25-051</strong><br><span style="font-size:10px;color:var(--gray);">TRHU8892330</span></td><td>🇦🇪 UAE</td><td style="font-size:11px;">May 31</td><td><div style="display:flex;align-items:center;gap:5px;"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:70%"></div></div><span style="font-size:10px;color:var(--gray);">70%</span></div></td></tr>
+        <tr><td><strong>NXS-25-052</strong><br><span style="font-size:10px;color:var(--gray);">TCNU1234567</span></td><td>🇶🇦 Qatar</td><td style="font-size:11px;">Jun 02</td><td><div style="display:flex;align-items:center;gap:5px;"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:45%"></div></div><span style="font-size:10px;color:var(--gray);">45%</span></div></td></tr>
+        <tr><td><strong>NXS-25-053</strong><br><span style="font-size:10px;color:var(--gray);">MSCU7654321</span></td><td>🇸🇦 Saudi</td><td style="font-size:11px;">Jun 05</td><td><div style="display:flex;align-items:center;gap:5px;"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:25%;background:#A78BFA;"></div></div><span style="font-size:10px;color:var(--gray);">25%</span></div></td></tr>
+        <tr><td><strong>NXS-25-054</strong><br><span style="font-size:10px;color:var(--gray);">TCLU2468101</span></td><td>🇴🇲 Oman</td><td style="font-size:11px;">Jun 06</td><td><div style="display:flex;align-items:center;gap:5px;"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:10%;background:#22C55E;"></div></div><span style="font-size:10px;color:var(--gray);">10%</span></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Recent Messages</span><a class="card-link" href="quotes.html">View All</a></div>
+    <div class="msg-item"><div class="msg-av" style="background:#2563EB;">M</div><div><div style="display:flex;justify-content:space-between;"><span class="msg-name">Mohammed Ali</span><span class="msg-time">2m ago</span></div><div class="msg-text">We are interested in 50 ton Green Chilli...</div></div><div style="width:7px;height:7px;background:var(--green);border-radius:50%;flex-shrink:0;margin-top:4px;"></div></div>
+    <div class="msg-item"><div class="msg-av" style="background:#16A34A;">A</div><div><div style="display:flex;justify-content:space-between;"><span class="msg-name">Ahmed Hassan</span><span class="msg-time">15m ago</span></div><div class="msg-text">Please share best price for Garlic...</div></div><div style="width:7px;height:7px;background:var(--green);border-radius:50%;flex-shrink:0;margin-top:4px;"></div></div>
+    <div class="msg-item"><div class="msg-av" style="background:#C89B3C;">A</div><div><div style="display:flex;justify-content:space-between;"><span class="msg-name">Al-Ameen Trading Co.</span><span class="msg-time">1h ago</span></div><div class="msg-text">Looking forward to your reply.</div></div></div>
+    <div class="msg-item"><div class="msg-av" style="background:#7C3AED;">F</div><div><div style="display:flex;justify-content:space-between;"><span class="msg-name">Fresh Foods Co.</span><span class="msg-time">2h ago</span></div><div class="msg-text">When can you ship the Onion?</div></div></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Notifications</span><span class="card-link" style="font-size:10px;background:var(--bg);padding:3px 8px;border-radius:6px;">Mark all read</span></div>
+    <div class="notif-item"><div class="notif-icon">📋</div><div><div class="notif-text">New quote from Al-Ameen Trading (UAE)</div><div class="notif-time">2 min ago</div></div></div>
+    <div class="notif-item"><div class="notif-icon">🚢</div><div><div class="notif-text">Shipment NXS-25-051 is in transit to UAE</div><div class="notif-time">15 min ago</div></div></div>
+    <div class="notif-item"><div class="notif-icon">👤</div><div><div class="notif-text">New buyer registered from Qatar</div><div class="notif-time">1 hour ago</div></div></div>
+    <div class="notif-item"><div class="notif-icon">💰</div><div><div class="notif-text">Payment received from Al Waha Foods</div><div class="notif-time">2 hours ago</div></div></div>
+  </div>
+</div>
+
+</div>
+<div class="dash-footer">© 2025 Nexus Group · Bengaluru, India · v1.0.0</div>
+</div>
+</div>
+<div class="ai-fab">
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-icon">✦</div>
+      <div><div class="ai-panel-title">Nexus AI Assistant</div></div>
+      <button class="modal-close" style="margin-left:auto;" onclick="toggleAI()">✕</button>
+    </div>
+    <div class="ai-panel-body">
+      <div class="ai-bubble">Hello, Founder Kamalesh. Ask me anything about Nexus Group.</div>
+      <div class="ai-chips">
+        <button class="ai-chip" onclick="aiQuery('Summarize today\'s business')">📊 Summarize today's business</button>
+        <button class="ai-chip" onclick="aiQuery('Who is our top buyer this month?')">👑 Top buyer this month</button>
+        <button class="ai-chip" onclick="aiQuery('Show pending shipments')">🚢 Pending shipments</button>
+        <button class="ai-chip" onclick="aiQuery('Draft a quotation email')">📝 Draft quotation email</button>
+      </div>
+    </div>
+    <div class="ai-panel-input">
+      <input type="text" placeholder="Ask anything..." id="aiInput" onkeydown="if(event.key==='Enter')aiSend()">
+      <button class="ai-send-btn" onclick="aiSend()">→</button>
+    </div>
+  </div>
+  <button class="ai-fab-btn" onclick="toggleAI()">
+    <div class="ai-fab-icon">✦</div>
+    <div class="ai-fab-text">
+      <div class="ai-fab-title">Nexus AI</div>
+      <div class="ai-fab-sub">Ask about your business</div>
+    </div>
+    <span id="aiChevron" style="font-size:9px;color:var(--gray);">▲</span>
+  </button>
+</div>
+<div class="toast-wrap" id="toastWrap"></div>
+<script src="../../js/admin/_shared.js"></script>
+<script>
+const rCtx = document.getElementById('revenueChart').getContext('2d');
+new Chart(rCtx, {
+  type: 'line',
+  data: {
+    labels: ['May 1','May 5','May 9','May 13','May 17','May 21','May 25','May 28'],
+    datasets: [{ data: [8,10,12,11,15,18,21,24.8], borderColor:'#C89B3C', backgroundColor:'rgba(200,155,60,0.07)', fill:true, tension:0.4, pointBackgroundColor:'#C89B3C', pointRadius:3, pointHoverRadius:6, borderWidth:2 }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c => '₹'+c.raw+'L' }, backgroundColor:'#1B1B1B', bodyColor:'#fff', padding:10, cornerRadius:8 } }, scales:{ x:{ grid:{display:false}, ticks:{font:{size:9},color:'#8C8C8C'} }, y:{ grid:{color:'rgba(0,0,0,0.04)'}, ticks:{font:{size:9},color:'#8C8C8C',callback:v=>'₹'+v+'L'} } } }
+});
+const dCtx = document.getElementById('donutChart').getContext('2d');
+new Chart(dCtx, {
+  type: 'doughnut',
+  data: { labels:['UAE','Saudi','Qatar','Oman','Others'], datasets:[{ data:[28,22,18,12,20], backgroundColor:['#C89B3C','#D4A94A','#E0BE78','#EDD59E','#E9E4DB'], borderWidth:0, hoverOffset:4 }] },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{ callbacks:{label:c=>`${c.label}: ${c.raw}%`}, backgroundColor:'#1B1B1B', bodyColor:'#fff', padding:8, cornerRadius:8 } }, cutout:'65%' }
+});
+</script>
+</body>
+</html>

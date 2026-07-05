@@ -1,0 +1,26 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /admin/
+
+# AI / LLM crawlers — explicitly allowed for AI Overviews, ChatGPT, Perplexity, Gemini, Claude
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://www.nexusagro.com/sitemap.xml
+Sitemap: https://www.nexusagro.com/sitemap-images.xml
